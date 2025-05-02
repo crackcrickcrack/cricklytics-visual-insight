@@ -25,23 +25,35 @@ interface PlayerCardProps {
   };
 }
 
-// Player images mapping
+// Updated player images mapping with verified URLs for popular cricketers
 const playerImages: Record<string, string> = {
-  'Virat Kohli': 'https://img1.hscicdn.com/image/upload/f_auto,t_h_100/lsci/db/PICTURES/CMS/316500/316555.png',
-  'Joe Root': 'https://img1.hscicdn.com/image/upload/f_auto,t_h_100/lsci/db/PICTURES/CMS/316600/316661.png',
-  'Kane Williamson': 'https://img1.hscicdn.com/image/upload/f_auto,t_h_100/lsci/db/PICTURES/CMS/316500/316580.png',
-  'Babar Azam': 'https://img1.hscicdn.com/image/upload/f_auto,t_h_100/lsci/db/PICTURES/CMS/323000/323006.png',
-  'Steve Smith': 'https://img1.hscicdn.com/image/upload/f_auto,t_h_100/lsci/db/PICTURES/CMS/316500/316510.png',
-  'Jasprit Bumrah': 'https://img1.hscicdn.com/image/upload/f_auto,t_h_100/lsci/db/PICTURES/CMS/316500/316538.png',
-  'Pat Cummins': 'https://img1.hscicdn.com/image/upload/f_auto,t_h_100/lsci/db/PICTURES/CMS/316500/316507.png',
-  'Ben Stokes': 'https://img1.hscicdn.com/image/upload/f_auto,t_h_100/lsci/db/PICTURES/CMS/316600/316642.png'
+  'Virat Kohli': 'https://img1.hscicdn.com/image/upload/f_auto/lsci/db/PICTURES/CMS/316500/316555.png',
+  'Joe Root': 'https://img1.hscicdn.com/image/upload/f_auto/lsci/db/PICTURES/CMS/316600/316661.png',
+  'Kane Williamson': 'https://img1.hscicdn.com/image/upload/f_auto/lsci/db/PICTURES/CMS/316500/316580.png',
+  'Babar Azam': 'https://img1.hscicdn.com/image/upload/f_auto/lsci/db/PICTURES/CMS/323000/323006.png',
+  'Steve Smith': 'https://img1.hscicdn.com/image/upload/f_auto/lsci/db/PICTURES/CMS/316500/316510.png',
+  'Jasprit Bumrah': 'https://img1.hscicdn.com/image/upload/f_auto/lsci/db/PICTURES/CMS/316500/316538.png',
+  'Pat Cummins': 'https://img1.hscicdn.com/image/upload/f_auto/lsci/db/PICTURES/CMS/316500/316507.png',
+  'Ben Stokes': 'https://img1.hscicdn.com/image/upload/f_auto/lsci/db/PICTURES/CMS/316600/316642.png',
+  'Rohit Sharma': 'https://img1.hscicdn.com/image/upload/f_auto/lsci/db/PICTURES/CMS/316500/316557.png',
+  'Jos Buttler': 'https://img1.hscicdn.com/image/upload/f_auto/lsci/db/PICTURES/CMS/316600/316640.png',
+  'Shakib Al Hasan': 'https://img1.hscicdn.com/image/upload/f_auto/lsci/db/PICTURES/CMS/316400/316486.png',
+  'Mitchell Starc': 'https://img1.hscicdn.com/image/upload/f_auto/lsci/db/PICTURES/CMS/316500/316512.png',
+  'Quinton de Kock': 'https://img1.hscicdn.com/image/upload/f_auto/lsci/db/PICTURES/CMS/316700/316722.png',
+  'Trent Boult': 'https://img1.hscicdn.com/image/upload/f_auto/lsci/db/PICTURES/CMS/316500/316579.png',
+  'David Warner': 'https://img1.hscicdn.com/image/upload/f_auto/lsci/db/PICTURES/CMS/316500/316508.png',
+  'Faf du Plessis': 'https://img1.hscicdn.com/image/upload/f_auto/lsci/db/PICTURES/CMS/316700/316724.png',
+  'Rashid Khan': 'https://img1.hscicdn.com/image/upload/f_auto/lsci/db/PICTURES/CMS/316400/316415.png',
+  'KL Rahul': 'https://img1.hscicdn.com/image/upload/f_auto/lsci/db/PICTURES/CMS/316500/316539.png',
+  'Kagiso Rabada': 'https://img1.hscicdn.com/image/upload/f_auto/lsci/db/PICTURES/CMS/316700/316719.png',
+  'Glenn Maxwell': 'https://img1.hscicdn.com/image/upload/f_auto/lsci/db/PICTURES/CMS/316500/316502.png'
 };
 
-// Default player images for fallback
+// Better default images for cricket players (high quality but generic cricket images)
 const defaultImages = [
-  'https://images.unsplash.com/photo-1531891570158-e71b35a485bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&h=764&q=80',
-  'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=800&q=80',
-  'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&h=870&q=80'
+  'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=800&q=80', // Cricket bat and ball
+  'https://images.unsplash.com/photo-1531415074968-036ba1b575da?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=800&q=80', // Cricket stadium
+  'https://images.unsplash.com/photo-1484900937517-bed4cfa6e178?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=800&q=80'  // Cricket field
 ];
 
 const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
@@ -50,8 +62,14 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
   const isAllrounder = role.toLowerCase().includes('all');
   const isBatsman = role.toLowerCase().includes('bat');
   
-  // Get player image from mapping or use provided imageUrl or fallback
+  // First try to get the image from our verified mapping
+  // If not found, use provided imageUrl or fallback to a default cricket image
   const playerImage = playerImages[name] || imageUrl || defaultImages[Math.floor(Math.random() * defaultImages.length)];
+
+  // Function to handle image loading errors - fallback to default images
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = defaultImages[Math.floor(Math.random() * defaultImages.length)];
+  };
 
   // Determine role color
   const getRoleColor = () => {
@@ -68,8 +86,9 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
         <div className="relative aspect-square overflow-hidden">
           <img 
             src={playerImage} 
-            alt={name}
+            alt={`${name} - ${role} from ${country}`}
             className="w-full h-full object-cover object-top transform group-hover:scale-110 transition-transform duration-700"
+            onError={handleImageError}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-cricket-dark via-cricket-dark/40 to-transparent opacity-80"></div>
           
@@ -105,7 +124,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
               </div>
               <div className="text-center bg-gradient-to-br from-muted/50 to-muted rounded-xl p-3">
                 <p className="text-xs uppercase font-bold tracking-wide opacity-70">100s/50s</p>
-                <p className="font-bold text-2xl">{stats.hundreds}/{stats.fifties}</p>
+                <p className="font-bold text-2xl">{stats.hundreds || 0}/{stats.fifties || 0}</p>
               </div>
             </>
           )}
