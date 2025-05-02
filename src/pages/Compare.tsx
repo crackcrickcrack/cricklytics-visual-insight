@@ -10,6 +10,7 @@ import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, RadarChart, PolarG
 import RadarPlayerChart from '@/components/RadarPlayerChart';
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import PlayerCard from '@/components/PlayerCard';
 
 // Mock player data
 const playerOptions = [
@@ -400,8 +401,37 @@ const Compare = () => {
     return commonStats;
   };
 
+  // Get player data safely
   const player1Data = playerData[player1];
   const player2Data = playerData[player2];
+
+  // Prepare player cards data
+  const getPlayerCardData = (playerId: string) => {
+    if (!playerData[playerId]) return null;
+    
+    const player = playerData[playerId];
+    const isBowler = 'wickets' in player.stats;
+    
+    return {
+      id: playerId,
+      name: player.name,
+      country: playerOptions.find(p => p.id === playerId)?.country || '',
+      role: isBowler ? 
+        ('runs' in player.stats ? 'All-Rounder' : 'Bowler') : 
+        'Batsman',
+      stats: {
+        matches: Number(player.stats.matches),
+        runs: 'runs' in player.stats ? Number(player.stats.runs) : undefined,
+        average: 'average' in player.stats ? Number(player.stats.average) : undefined,
+        wickets: 'wickets' in player.stats ? Number(player.stats.wickets) : undefined,
+        economy: 'economy' in player.stats ? Number(player.stats.economy) : undefined,
+        hundreds: 'hundreds' in player.stats ? Number(player.stats.hundreds) : undefined,
+        fifties: 'fifties' in player.stats ? Number(player.stats.fifties) : undefined,
+        best: 'best' in player.stats ? String(player.stats.best) : 
+             'bestScore' in player.stats ? String(player.stats.bestScore) : undefined,
+      }
+    };
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -440,14 +470,9 @@ const Compare = () => {
                   </SelectContent>
                 </Select>
                 
-                {player1Data && (
-                  <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2">
-                    {Object.entries(player1Data.stats).map(([key, value]) => (
-                      <div key={key}>
-                        <p className="text-sm text-muted-foreground capitalize">{key}</p>
-                        <p className="font-semibold">{String(value)}</p>
-                      </div>
-                    ))}
+                {player1Data && getPlayerCardData(player1) && (
+                  <div className="mt-4">
+                    <PlayerCard player={getPlayerCardData(player1)!} />
                   </div>
                 )}
               </CardContent>
@@ -472,14 +497,9 @@ const Compare = () => {
                   </SelectContent>
                 </Select>
                 
-                {player2Data && (
-                  <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2">
-                    {Object.entries(player2Data.stats).map(([key, value]) => (
-                      <div key={key}>
-                        <p className="text-sm text-muted-foreground capitalize">{key}</p>
-                        <p className="font-semibold">{String(value)}</p>
-                      </div>
-                    ))}
+                {player2Data && getPlayerCardData(player2) && (
+                  <div className="mt-4">
+                    <PlayerCard player={getPlayerCardData(player2)!} />
                   </div>
                 )}
               </CardContent>
