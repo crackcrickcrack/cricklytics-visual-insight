@@ -18,7 +18,7 @@ const liveMatches = [
       { name: 'India', shortName: 'IND', score: '276', wickets: 4, overs: 42.3 },
       { name: 'Australia', shortName: 'AUS' }
     ],
-    format: 'ODI',
+    format: "ODI" as const,
     venue: 'Melbourne Cricket Ground',
     status: 'India batting',
     isLive: true
@@ -29,7 +29,7 @@ const liveMatches = [
       { name: 'England', shortName: 'ENG', score: '175', wickets: 10, overs: 32.4 },
       { name: 'South Africa', shortName: 'SA', score: '112', wickets: 3, overs: 21.0 }
     ],
-    format: 'ODI',
+    format: "ODI" as const,
     venue: 'Lords, London',
     status: 'South Africa batting',
     isLive: true
@@ -40,7 +40,7 @@ const liveMatches = [
       { name: 'New Zealand', shortName: 'NZ', score: '242', wickets: 10, overs: 50.0 },
       { name: 'Pakistan', shortName: 'PAK', score: '243', wickets: 6, overs: 47.5 }
     ],
-    format: 'ODI',
+    format: "T20" as const,
     venue: 'Hagley Oval',
     status: 'Pakistan won by 4 wickets',
     isLive: false

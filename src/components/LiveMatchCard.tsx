@@ -10,11 +10,11 @@ interface Team {
   overs?: number;
 }
 
-interface LiveMatchCardProps {
+export interface LiveMatchCardProps {
   match: {
     id: string;
-    teams: Team[];  // Changed from [Team, Team] to Team[] to accept array
-    format: 'T20' | 'ODI' | 'Test';
+    teams: Team[];  
+    format: "T20" | "ODI" | "Test";
     venue: string;
     status: string;
     isLive: boolean;

@@ -14,7 +14,7 @@ const liveMatches = [
       { name: 'India', shortName: 'IND', score: '276', wickets: 4, overs: 42.3 },
       { name: 'Australia', shortName: 'AUS' }
     ],
-    format: 'ODI',
+    format: "ODI" as const,
     venue: 'Melbourne Cricket Ground',
     status: 'India batting',
     isLive: true
@@ -25,7 +25,7 @@ const liveMatches = [
       { name: 'England', shortName: 'ENG', score: '175', wickets: 10, overs: 32.4 },
       { name: 'South Africa', shortName: 'SA', score: '112', wickets: 3, overs: 21.0 }
     ],
-    format: 'ODI',
+    format: "ODI" as const,
     venue: 'Lords, London',
     status: 'South Africa batting',
     isLive: true
@@ -36,7 +36,7 @@ const liveMatches = [
       { name: 'New Zealand', shortName: 'NZ', score: '242', wickets: 10, overs: 50.0 },
       { name: 'Pakistan', shortName: 'PAK', score: '243', wickets: 6, overs: 47.5 }
     ],
-    format: 'T20',
+    format: "T20" as const,
     venue: 'Hagley Oval',
     status: 'Pakistan won by 4 wickets',
     isLive: false
@@ -47,7 +47,7 @@ const liveMatches = [
       { name: 'Bangladesh', shortName: 'BAN', score: '156', wickets: 10, overs: 41.2 },
       { name: 'Sri Lanka', shortName: 'SL', score: '157', wickets: 3, overs: 30.1 }
     ],
-    format: 'ODI',
+    format: "ODI" as const,
     venue: 'Dhaka',
     status: 'Sri Lanka won by 7 wickets',
     isLive: false
@@ -61,7 +61,7 @@ const upcomingMatches = [
       { name: 'West Indies', shortName: 'WI' },
       { name: 'Afghanistan', shortName: 'AFG' }
     ],
-    format: 'T20',
+    format: "T20" as const,
     venue: 'Kingston, Jamaica',
     status: 'Starting in 2 days',
     isLive: false
@@ -72,7 +72,7 @@ const upcomingMatches = [
       { name: 'India', shortName: 'IND' },
       { name: 'New Zealand', shortName: 'NZ' }
     ],
-    format: 'Test',
+    format: "Test" as const,
     venue: 'Eden Gardens, Kolkata',
     status: 'Starting in 5 days',
     isLive: false
@@ -83,7 +83,7 @@ const upcomingMatches = [
       { name: 'Australia', shortName: 'AUS' },
       { name: 'England', shortName: 'ENG' }
     ],
-    format: 'ODI',
+    format: "ODI" as const,
     venue: 'The Oval, London',
     status: 'Starting tomorrow',
     isLive: false
@@ -97,7 +97,7 @@ const recentMatches = [
       { name: 'Pakistan', shortName: 'PAK', score: '302', wickets: 8, overs: 50.0 },
       { name: 'South Africa', shortName: 'SA', score: '294', wickets: 10, overs: 49.3 }
     ],
-    format: 'ODI',
+    format: "ODI" as const,
     venue: 'Rawalpindi',
     status: 'Pakistan won by 8 runs',
     isLive: false
@@ -108,7 +108,7 @@ const recentMatches = [
       { name: 'India', shortName: 'IND', score: '415', wickets: 8, overs: 50.0 },
       { name: 'Sri Lanka', shortName: 'SL', score: '217', wickets: 10, overs: 43.2 }
     ],
-    format: 'ODI',
+    format: "ODI" as const,
     venue: 'Colombo',
     status: 'India won by 198 runs',
     isLive: false
@@ -119,7 +119,7 @@ const recentMatches = [
       { name: 'England', shortName: 'ENG', score: '241', wickets: 8, overs: 50.0 },
       { name: 'New Zealand', shortName: 'NZ', score: '241', wickets: 10, overs: 50.0 }
     ],
-    format: 'ODI',
+    format: "ODI" as const,
     venue: 'Lords, London',
     status: 'Match tied, England won on boundary count',
     isLive: false
