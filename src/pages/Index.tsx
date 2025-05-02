@@ -91,20 +91,20 @@ const topPlayers = [
 
 const insights = [
   {
-    title: 'Kohli's Form Analysis',
-    content: 'Virat Kohli has averaged 68.5 in the last 10 ODIs, significantly higher than his career average of 57.3.',
+    title: "Kohli's Form Analysis",
+    content: "Virat Kohli has averaged 68.5 in the last 10 ODIs, significantly higher than his career average of 57.3.",
     category: 'batting' as const,
     timestamp: '2 hours ago'
   },
   {
-    title: 'Bumrah's Death Bowling',
-    content: 'Jasprit Bumrah has conceded only 5.2 runs per over in the death overs (41-50) in the last 15 matches.',
+    title: "Bumrah's Death Bowling",
+    content: "Jasprit Bumrah has conceded only 5.2 runs per over in the death overs (41-50) in the last 15 matches.",
     category: 'bowling' as const,
     timestamp: '3 hours ago'
   },
   {
-    title: 'India vs Australia Prediction',
-    content: 'Based on current form and historical data, India has a 62% chance of winning today's match.',
+    title: "India vs Australia Prediction",
+    content: "Based on current form and historical data, India has a 62% chance of winning today's match.",
     category: 'prediction' as const,
     timestamp: '5 hours ago'
   }
@@ -235,7 +235,7 @@ const Index = () => {
                     </svg>
                     AI Prediction
                   </h4>
-                  <p className="text-sm">Based on historical data and current form, our AI predicts Virat Kohli has a 72% chance of scoring 50+ runs in today's match.</p>
+                  <p className="text-sm">Based on historical data and current form, our AI predicts Virat Kohli has a 72% chance of scoring 50+ runs in today{"'"}s match.</p>
                 </div>
               </div>
             </div>
