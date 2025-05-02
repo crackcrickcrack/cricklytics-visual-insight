@@ -13,7 +13,7 @@ interface Team {
 interface LiveMatchCardProps {
   match: {
     id: string;
-    teams: [Team, Team];
+    teams: Team[];  // Changed from [Team, Team] to Team[] to accept array
     format: 'T20' | 'ODI' | 'Test';
     venue: string;
     status: string;
@@ -23,6 +23,10 @@ interface LiveMatchCardProps {
 
 const LiveMatchCard: React.FC<LiveMatchCardProps> = ({ match }) => {
   const { teams, format, venue, status, isLive } = match;
+  
+  // Ensure we have access to both teams safely
+  const team1 = teams[0] || { name: '', shortName: '' };
+  const team2 = teams[1] || { name: '', shortName: '' };
   
   return (
     <Card className="overflow-hidden hover:shadow-md transition-shadow duration-200">
@@ -40,15 +44,15 @@ const LiveMatchCard: React.FC<LiveMatchCardProps> = ({ match }) => {
         <div className="flex justify-between items-center mb-4">
           <div className="flex items-center">
             <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-2">
-              {teams[0].shortName.substring(0, 2)}
+              {team1.shortName.substring(0, 2)}
             </div>
-            <span className="font-semibold">{teams[0].name}</span>
+            <span className="font-semibold">{team1.name}</span>
           </div>
           <div className="text-right">
-            {teams[0].score && (
+            {team1.score && (
               <span className="font-bold">
-                {teams[0].score}/{teams[0].wickets} 
-                <span className="text-sm font-normal ml-1">({teams[0].overs})</span>
+                {team1.score}/{team1.wickets} 
+                <span className="text-sm font-normal ml-1">({team1.overs})</span>
               </span>
             )}
           </div>
@@ -57,15 +61,15 @@ const LiveMatchCard: React.FC<LiveMatchCardProps> = ({ match }) => {
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-2">
-              {teams[1].shortName.substring(0, 2)}
+              {team2.shortName.substring(0, 2)}
             </div>
-            <span className="font-semibold">{teams[1].name}</span>
+            <span className="font-semibold">{team2.name}</span>
           </div>
           <div className="text-right">
-            {teams[1].score && (
+            {team2.score && (
               <span className="font-bold">
-                {teams[1].score}/{teams[1].wickets} 
-                <span className="text-sm font-normal ml-1">({teams[1].overs})</span>
+                {team2.score}/{team2.wickets} 
+                <span className="text-sm font-normal ml-1">({team2.overs})</span>
               </span>
             )}
           </div>

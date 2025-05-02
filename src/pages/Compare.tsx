@@ -22,7 +22,14 @@ const playerOptions = [
 ];
 
 // Mock player detailed data
-const playerData = {
+const playerData: Record<string, {
+  name: string;
+  skills: { name: string; value: number }[];
+  color: string;
+  stats: Record<string, string | number>;
+  recentForm: { match: string; score: string; result: string }[];
+  venueStats: { name: string; value: number }[];
+}> = {
   '1': {
     name: "Virat Kohli",
     skills: [
@@ -105,33 +112,33 @@ const Compare = () => {
     return [
       {
         name: 'Matches',
-        [p1.name]: p1.stats.matches,
-        [p2.name]: p2.stats.matches,
+        [p1.name]: Number(p1.stats.matches),
+        [p2.name]: Number(p2.stats.matches),
       },
       {
         name: 'Runs',
-        [p1.name]: p1.stats.runs/100, // Scaled down for visualization
-        [p2.name]: p2.stats.runs/100,
+        [p1.name]: Number(p1.stats.runs)/100, // Scaled down for visualization
+        [p2.name]: Number(p2.stats.runs)/100,
       },
       {
         name: 'Average',
-        [p1.name]: p1.stats.average,
-        [p2.name]: p2.stats.average,
+        [p1.name]: Number(p1.stats.average),
+        [p2.name]: Number(p2.stats.average),
       },
       {
         name: 'Strike Rate',
-        [p1.name]: p1.stats.strikeRate,
-        [p2.name]: p2.stats.strikeRate,
+        [p1.name]: Number(p1.stats.strikeRate),
+        [p2.name]: Number(p2.stats.strikeRate),
       },
       {
         name: '100s',
-        [p1.name]: p1.stats.hundreds,
-        [p2.name]: p2.stats.hundreds,
+        [p1.name]: Number(p1.stats.hundreds),
+        [p2.name]: Number(p2.stats.hundreds),
       },
       {
         name: '50s',
-        [p1.name]: p1.stats.fifties,
-        [p2.name]: p2.stats.fifties,
+        [p1.name]: Number(p1.stats.fifties),
+        [p2.name]: Number(p2.stats.fifties),
       },
     ];
   };
@@ -169,7 +176,7 @@ const Compare = () => {
                     {Object.entries(playerData[player1].stats).map(([key, value]) => (
                       <div key={key}>
                         <p className="text-sm text-muted-foreground capitalize">{key}</p>
-                        <p className="font-semibold">{value}</p>
+                        <p className="font-semibold">{String(value)}</p>
                       </div>
                     ))}
                   </div>
@@ -201,7 +208,7 @@ const Compare = () => {
                     {Object.entries(playerData[player2].stats).map(([key, value]) => (
                       <div key={key}>
                         <p className="text-sm text-muted-foreground capitalize">{key}</p>
-                        <p className="font-semibold">{value}</p>
+                        <p className="font-semibold">{String(value)}</p>
                       </div>
                     ))}
                   </div>
@@ -256,7 +263,7 @@ const Compare = () => {
                       }}
                       formatter={(value, name) => {
                         if (name === 'Runs') {
-                          return [value * 100, name]; // Unscale for display
+                          return [Number(value) * 100, name]; // Unscale for display
                         }
                         return [value, name];
                       }}
