@@ -52,78 +52,77 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
   
   // Get player image from mapping or use provided imageUrl or fallback
   const playerImage = playerImages[name] || imageUrl || defaultImages[Math.floor(Math.random() * defaultImages.length)];
+
+  // Determine role color
+  const getRoleColor = () => {
+    if (isBatsman) return 'bg-cricket-blue';
+    if (role.toLowerCase().includes('bowl')) return 'bg-cricket-green';
+    if (isAllrounder) return 'bg-cricket-purple';
+    return 'bg-cricket-yellow';
+  };
   
   return (
-    <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 rounded-xl border-0 shadow-md">
+    <Card className="overflow-hidden card-shine hover:shadow-2xl transition-all duration-300 rounded-2xl border-0 shadow-lg group">
       <div className="grid grid-cols-1 relative">
         {/* Player Image with Overlay */}
-        <div className="relative aspect-[3/2] overflow-hidden">
+        <div className="relative aspect-square overflow-hidden">
           <img 
             src={playerImage} 
             alt={name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-top transform group-hover:scale-110 transition-transform duration-700"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-70"></div>
-        </div>
-        
-        {/* Player Info Overlay */}
-        <div className="absolute inset-0 flex flex-col justify-end p-5 text-white">
-          <div className="flex justify-between items-end mb-2">
-            <div>
-              <h3 className="font-bold text-2xl mb-1">{name}</h3>
-              <div className="flex gap-2">
-                <span className="px-2 py-0.5 bg-cricket-green/90 text-xs font-medium rounded-full">{country}</span>
-                <span className="px-2 py-0.5 bg-cricket-blue/90 text-xs font-medium rounded-full">{role}</span>
+          <div className="absolute inset-0 bg-gradient-to-t from-cricket-dark via-cricket-dark/40 to-transparent opacity-80"></div>
+          
+          {/* Player Name Badge */}
+          <div className="absolute bottom-0 left-0 right-0 p-5">
+            <div className="flex flex-col items-start">
+              <div className="flex gap-2 mb-2">
+                <span className={`px-2 py-1 ${getRoleColor()} text-xs font-bold uppercase tracking-wider rounded-full text-white`}>{role}</span>
+                <span className="px-2 py-1 bg-cricket-yellow/90 text-xs font-bold uppercase tracking-wider rounded-full text-cricket-dark">{country}</span>
               </div>
+              <h3 className="font-bold text-3xl text-white">{name}</h3>
             </div>
-            
-            <Avatar className="w-14 h-14 border-2 border-white">
-              <AvatarImage src={playerImage} alt={name} />
-              <AvatarFallback className="bg-cricket-blue text-white font-bold">
-                {name.substring(0, 2).toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
           </div>
         </div>
       </div>
       
       <div className="p-5 bg-white dark:bg-card">
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-3">
-          <div className="text-center bg-secondary/30 rounded-lg p-2">
-            <p className="text-xs text-muted-foreground uppercase font-medium">Matches</p>
-            <p className="font-bold text-lg">{stats.matches}</p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <div className="text-center bg-gradient-to-br from-muted/50 to-muted rounded-xl p-3">
+            <p className="text-xs uppercase font-bold tracking-wide opacity-70">Matches</p>
+            <p className="font-bold text-2xl">{stats.matches}</p>
           </div>
           
           {(isBatsman || isAllrounder) && (
             <>
-              <div className="text-center bg-secondary/30 rounded-lg p-2">
-                <p className="text-xs text-muted-foreground uppercase font-medium">Runs</p>
-                <p className="font-bold text-lg">{stats.runs}</p>
+              <div className="text-center bg-gradient-to-br from-muted/50 to-muted rounded-xl p-3">
+                <p className="text-xs uppercase font-bold tracking-wide opacity-70">Runs</p>
+                <p className="font-bold text-2xl">{stats.runs}</p>
               </div>
-              <div className="text-center bg-secondary/30 rounded-lg p-2">
-                <p className="text-xs text-muted-foreground uppercase font-medium">Average</p>
-                <p className="font-bold text-lg">{stats.average}</p>
+              <div className="text-center bg-gradient-to-br from-muted/50 to-muted rounded-xl p-3">
+                <p className="text-xs uppercase font-bold tracking-wide opacity-70">Average</p>
+                <p className="font-bold text-2xl">{stats.average}</p>
               </div>
-              <div className="text-center bg-secondary/30 rounded-lg p-2">
-                <p className="text-xs text-muted-foreground uppercase font-medium">100s/50s</p>
-                <p className="font-bold text-lg">{stats.hundreds}/{stats.fifties}</p>
+              <div className="text-center bg-gradient-to-br from-muted/50 to-muted rounded-xl p-3">
+                <p className="text-xs uppercase font-bold tracking-wide opacity-70">100s/50s</p>
+                <p className="font-bold text-2xl">{stats.hundreds}/{stats.fifties}</p>
               </div>
             </>
           )}
           
           {(!isBatsman || isAllrounder) && (
             <>
-              <div className="text-center bg-secondary/30 rounded-lg p-2">
-                <p className="text-xs text-muted-foreground uppercase font-medium">Wickets</p>
-                <p className="font-bold text-lg">{stats.wickets}</p>
+              <div className="text-center bg-gradient-to-br from-muted/50 to-muted rounded-xl p-3">
+                <p className="text-xs uppercase font-bold tracking-wide opacity-70">Wickets</p>
+                <p className="font-bold text-2xl">{stats.wickets}</p>
               </div>
-              <div className="text-center bg-secondary/30 rounded-lg p-2">
-                <p className="text-xs text-muted-foreground uppercase font-medium">Economy</p>
-                <p className="font-bold text-lg">{stats.economy}</p>
+              <div className="text-center bg-gradient-to-br from-muted/50 to-muted rounded-xl p-3">
+                <p className="text-xs uppercase font-bold tracking-wide opacity-70">Economy</p>
+                <p className="font-bold text-2xl">{stats.economy}</p>
               </div>
-              <div className="text-center bg-secondary/30 rounded-lg p-2">
-                <p className="text-xs text-muted-foreground uppercase font-medium">Best</p>
-                <p className="font-bold text-lg">{stats.best}</p>
+              <div className="text-center bg-gradient-to-br from-muted/50 to-muted rounded-xl p-3">
+                <p className="text-xs uppercase font-bold tracking-wide opacity-70">Best</p>
+                <p className="font-bold text-2xl">{stats.best}</p>
               </div>
             </>
           )}

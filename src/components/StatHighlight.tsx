@@ -11,21 +11,21 @@ interface StatHighlightProps {
 
 const StatHighlight: React.FC<StatHighlightProps> = ({ title, value, icon, trend, trendValue }) => {
   return (
-    <div className="cricket-card">
+    <div className="cricket-card p-5">
       <div className="flex justify-between items-start">
-        <h3 className="text-sm font-medium text-muted-foreground">{title}</h3>
+        <h3 className="text-sm font-medium uppercase tracking-wider text-muted-foreground">{title}</h3>
         {icon && <div className="text-cricket-green">{icon}</div>}
       </div>
-      <div className="mt-2">
-        <div className="stat-value">{value}</div>
+      <div className="mt-3">
+        <div className="stat-value font-extrabold">{value}</div>
         
         {(trend && trendValue) && (
-          <div className={`flex items-center mt-1 text-sm ${
+          <div className={`flex items-center mt-2 text-sm ${
             trend === 'up' 
-              ? 'text-green-500' 
+              ? 'text-cricket-green' 
               : trend === 'down' 
-                ? 'text-red-500' 
-                : 'text-yellow-500'
+                ? 'text-cricket-pink' 
+                : 'text-cricket-yellow'
           }`}>
             {trend === 'up' ? (
               <svg className="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -40,7 +40,7 @@ const StatHighlight: React.FC<StatHighlightProps> = ({ title, value, icon, trend
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14" />
               </svg>
             )}
-            <span>{trendValue}</span>
+            <span className="font-medium">{trendValue}</span>
           </div>
         )}
       </div>
