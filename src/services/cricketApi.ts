@@ -91,7 +91,7 @@ export const cricketApi = {
           },
           shots: player.stats.shots || [],
         },
-        recentForm: await getRecentForm(playerId),
+        recentForm: await cricketApi.getRecentForm(playerId),
       };
     } catch (error) {
       console.error('Error fetching player stats:', error);
@@ -138,8 +138,4 @@ function getPlayerColor(country: string): string {
   };
 
   return colors[country] || '#1E40AF'; // Default to blue if country not found
-} 
-
-function getRecentForm(playerId: string): { match: string; runs: number; balls: number; venue: string; }[] | PromiseLike<{ match: string; runs: number; balls: number; venue: string; }[]> {
-    throw new Error('Function not implemented.');
 }
