@@ -53,11 +53,11 @@ const RadarPlayerChart: React.FC<PlayerSkillProps> = ({
   });
 
   return (
-    <Card className="w-full h-[350px]">
-      <CardHeader className="pb-2">
+    <Card className="w-full h-[350px] border shadow-sm">
+      <CardHeader className="pb-2 border-b">
         <CardTitle className="text-base font-medium">{title}</CardTitle>
       </CardHeader>
-      <CardContent className="p-0 h-[300px]">
+      <CardContent className="p-4 h-[300px]">
         <ResponsiveContainer width="100%" height="100%">
           <RadarChart cx="50%" cy="50%" outerRadius="70%" data={data}>
             <PolarGrid stroke="#e2e8f0" />
@@ -66,16 +66,16 @@ const RadarPlayerChart: React.FC<PlayerSkillProps> = ({
             <Radar
               name={player.name}
               dataKey={player.name}
-              stroke={player.color}
-              fill={player.color}
+              stroke={player.color || "#192550"}
+              fill={player.color || "#192550"}
               fillOpacity={0.5}
             />
             {secondPlayer && (
               <Radar
                 name={secondPlayer.name}
                 dataKey={secondPlayer.name}
-                stroke={secondPlayer.color}
-                fill={secondPlayer.color}
+                stroke={secondPlayer.color || "#00b67a"}
+                fill={secondPlayer.color || "#00b67a"}
                 fillOpacity={0.5}
               />
             )}

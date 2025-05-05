@@ -33,13 +33,16 @@ export default {
         foreground: "hsl(var(--foreground))",
         cricket: {
           blue: "#0057FF",
-          green: "#00E267",
+          navy: "#192550",
+          darkblue: "#0F1A36",
+          green: "#00b67a",
           yellow: "#FFD600",
           orange: "#FF5C00",
           purple: "#7000FF",
           pink: "#FF006B",
           dark: "#080E21",
           light: "#F0F7FF",
+          gray: "#f3f5f7",
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",

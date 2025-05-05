@@ -1,73 +1,54 @@
 
 import React from 'react';
+import { BarChart, TrendingUp, Target } from 'lucide-react';
 
 interface InsightCardProps {
   title: string;
   content: string;
-  category: 'batting' | 'bowling' | 'team' | 'prediction';
+  category: 'batting' | 'bowling' | 'prediction';
   timestamp: string;
 }
 
-const InsightCard: React.FC<InsightCardProps> = ({ 
-  title, content, category, timestamp 
-}) => {
-  const getCategoryColor = () => {
+const InsightCard: React.FC<InsightCardProps> = ({ title, content, category, timestamp }) => {
+  const getIcon = () => {
     switch (category) {
-      case 'batting': return 'text-cricket-yellow bg-cricket-yellow/10 border-cricket-yellow/20';
-      case 'bowling': return 'text-cricket-green bg-cricket-green/10 border-cricket-green/20';
-      case 'team': return 'text-cricket-blue bg-cricket-blue/10 border-cricket-blue/20';
-      case 'prediction': return 'text-cricket-purple bg-cricket-purple/10 border-cricket-purple/20';
-      default: return 'text-gray-500 bg-gray-100';
+      case 'batting':
+        return <BarChart size={18} className="text-cricket-blue" />;
+      case 'bowling':
+        return <TrendingUp size={18} className="text-cricket-green" />;
+      case 'prediction':
+        return <Target size={18} className="text-cricket-purple" />;
+      default:
+        return <BarChart size={18} className="text-cricket-blue" />;
     }
   };
 
-  const getCategoryIcon = () => {
+  const getBgColor = () => {
     switch (category) {
       case 'batting':
-        return (
-          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2H5z" />
-          </svg>
-        );
+        return 'border-l-4 border-l-cricket-blue';
       case 'bowling':
-        return (
-          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <circle cx="12" cy="12" r="10" strokeWidth="2" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v8m-4-4h8" />
-          </svg>
-        );
-      case 'team':
-        return (
-          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-          </svg>
-        );
+        return 'border-l-4 border-l-cricket-green';
       case 'prediction':
-        return (
-          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-          </svg>
-        );
+        return 'border-l-4 border-l-cricket-purple';
       default:
-        return null;
+        return 'border-l-4 border-l-cricket-blue';
     }
   };
 
   return (
-    <div className="hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden rounded-2xl border border-white/10 bg-card">
-      <div className="p-5">
-        <div className="flex items-start justify-between mb-4">
-          <h3 className="font-headline text-xl uppercase tracking-tight">{title}</h3>
-          <div className={`flex items-center justify-center p-2 rounded-full ${getCategoryColor()}`}>
-            {getCategoryIcon()}
-          </div>
+    <div className={`data-card ${getBgColor()}`}>
+      <div className="flex items-start">
+        <div className="p-2 rounded-md bg-gray-50">
+          {getIcon()}
         </div>
-        
-        <p className="text-base opacity-80 mb-5">{content}</p>
-        
-        <div className="flex justify-between items-center text-sm text-muted-foreground mt-5 pt-4 border-t border-white/10">
-          <span className="capitalize px-3 py-1 rounded-full bg-muted font-action text-xs uppercase tracking-wider">{category}</span>
-          <span className="text-xs opacity-70">{timestamp}</span>
+        <div className="ml-3 flex-1">
+          <h3 className="font-medium text-base">{title}</h3>
+          <p className="text-sm text-gray-600 mt-1">{content}</p>
+          <div className="mt-3 flex items-center justify-between">
+            <span className="text-xs text-gray-500">{timestamp}</span>
+            <button className="text-cricket-navy hover:text-cricket-blue text-xs font-medium transition-colors">Read More</button>
+          </div>
         </div>
       </div>
     </div>

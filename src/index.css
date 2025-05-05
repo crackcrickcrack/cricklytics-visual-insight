@@ -16,10 +16,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 246 100% 50%;
+    --primary: 223 100% 18%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 153 100% 45%;
+    --secondary: 144 100% 36%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
@@ -33,25 +33,25 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 246 100% 50%;
+    --ring: 223 100% 18%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
   }
 
   .dark {
-    --background: 240 24% 6%;
+    --background: 223 64% 9%;
     --foreground: 210 40% 98%;
 
-    --card: 240 21% 10%;
+    --card: 223 57% 12%;
     --card-foreground: 210 40% 98%;
 
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 246 100% 60%;
+    --primary: 223 100% 25%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 153 100% 45%;
+    --secondary: 144 70% 36%;
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
@@ -65,7 +65,7 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 246 100% 60%;
+    --ring: 224.3 76.3% 48%;
   }
 }
 
@@ -86,19 +86,19 @@
 
 @layer components {
   .cricket-card {
-    @apply bg-card rounded-2xl border-0 shadow-lg hover:shadow-xl transition-all duration-300;
+    @apply bg-white rounded-lg border border-border shadow-sm hover:shadow-md transition-all duration-300;
   }
   .stat-value {
-    @apply text-2xl md:text-3xl font-bold text-cricket-blue dark:text-cricket-green;
+    @apply text-2xl md:text-3xl font-bold text-cricket-navy dark:text-cricket-green;
   }
   .stat-label {
     @apply text-sm text-muted-foreground;
   }
   .cricket-gradient {
-    @apply bg-gradient-to-br from-cricket-blue via-cricket-purple to-cricket-pink;
+    @apply bg-gradient-to-br from-cricket-navy via-cricket-blue to-cricket-darkblue;
   }
   .hero-pattern {
-    background-color: #080E21;
+    background-color: #192550;
     background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   }
   .slant-edge {
@@ -109,23 +109,23 @@
   }
   
   .cricket-button {
-    @apply font-display uppercase tracking-wide font-bold py-3 px-6 text-lg rounded-lg transition-all duration-300 inline-flex items-center gap-2;
+    @apply font-sans uppercase tracking-wide font-medium py-2 px-4 text-base rounded transition-all duration-300 inline-flex items-center gap-2;
   }
   
   .cricket-button-primary {
-    @apply cricket-button bg-cricket-blue text-white hover:scale-105 hover:shadow-lg hover:shadow-cricket-blue/20;
+    @apply cricket-button bg-cricket-navy text-white hover:bg-cricket-navy/90;
   }
   
   .cricket-button-secondary {
-    @apply cricket-button bg-cricket-green text-cricket-dark hover:scale-105 hover:shadow-lg hover:shadow-cricket-green/20;
+    @apply cricket-button bg-cricket-green text-white hover:bg-cricket-green/90;
   }
 
   .cricket-button-accent {
-    @apply cricket-button bg-cricket-yellow text-cricket-dark hover:scale-105 hover:shadow-lg hover:shadow-cricket-yellow/20;
+    @apply cricket-button bg-cricket-yellow text-cricket-dark hover:bg-cricket-yellow/90;
   }
 
   .cricket-button-outline {
-    @apply cricket-button bg-transparent border-2 border-white text-white hover:bg-white/10;
+    @apply cricket-button bg-transparent border border-cricket-navy text-cricket-navy hover:bg-cricket-navy/5;
   }
   
   .cricket-heading {
@@ -137,10 +137,27 @@
   }
   
   .format-badge {
-    @apply font-sans font-bold text-sm tracking-widest uppercase px-3 py-1 rounded-full;
+    @apply font-sans font-medium text-xs tracking-wide uppercase px-2 py-0.5 rounded;
   }
   
   .glass-panel {
-    @apply backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl;
+    @apply backdrop-blur-md bg-white/10 border border-white/20 rounded-lg;
+  }
+
+  .data-card {
+    @apply bg-white rounded-lg border border-border p-5 shadow-sm hover:shadow-md transition-all duration-300;
+  }
+  
+  .analytics-section {
+    @apply py-12 px-4;
+  }
+  
+  .section-title {
+    @apply text-2xl font-display uppercase tracking-tight mb-6 relative;
+  }
+  
+  .section-title::after {
+    content: '';
+    @apply block w-16 h-1 bg-cricket-green mt-2;
   }
 }

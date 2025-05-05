@@ -11,21 +11,21 @@ interface StatHighlightProps {
 
 const StatHighlight: React.FC<StatHighlightProps> = ({ title, value, icon, trend, trendValue }) => {
   return (
-    <div className="rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm p-5 transition-all duration-300 hover:border-white/20 hover:shadow-lg">
+    <div className="data-card">
       <div className="flex justify-between items-start">
-        <h3 className="font-display text-sm uppercase tracking-wider opacity-70">{title}</h3>
+        <h3 className="text-sm uppercase tracking-wider text-muted-foreground">{title}</h3>
         {icon && <div className="text-cricket-green">{icon}</div>}
       </div>
       <div className="mt-4">
-        <div className="font-headline text-4xl text-cricket-blue dark:text-cricket-green">{value}</div>
+        <div className="font-display text-4xl text-cricket-navy dark:text-cricket-green">{value}</div>
         
         {(trend && trendValue) && (
           <div className={`flex items-center mt-2 text-sm ${
             trend === 'up' 
               ? 'text-cricket-green' 
               : trend === 'down' 
-                ? 'text-cricket-pink' 
-                : 'text-cricket-yellow'
+                ? 'text-red-500' 
+                : 'text-amber-500'
           }`}>
             {trend === 'up' ? (
               <svg className="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor">
