@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const API_KEY = process.env.NEXT_PUBLIC_CRICKET_API_KEY;
-const BASE_URL = 'https://api.cricapi.com/v1';
+const API_KEY = import.meta.env.VITE_API_KEY;
+const BASE_URL = import.meta.env.VITE_API_URL || 'https://api.cricapi.com/v1';
 
 interface PlayerStats {
   matches: number;
@@ -43,6 +43,11 @@ interface PlayerData {
 export const cricketApi = {
   async getPlayerStats(playerId: string): Promise<PlayerData | null> {
     try {
+      if (!API_KEY) {
+        console.error('API key is not configured');
+        return null;
+      }
+
       const response = await axios.get(`${BASE_URL}/players`, {
         params: {
           apikey: API_KEY,
@@ -50,11 +55,12 @@ export const cricketApi = {
         },
       });
 
-      if (!response.data.data || response.data.data.length === 0) {
+      const data = response.data as { data?: Array<any> };
+      if (!data.data || data.data.length === 0) {
         return null;
       }
 
-      const player = response.data.data[0];
+      const player = data.data[0];
       
       // Transform API response to match our PlayerData interface
       return {
@@ -101,6 +107,11 @@ export const cricketApi = {
 
   async getRecentForm(playerId: string) {
     try {
+      if (!API_KEY) {
+        console.error('API key is not configured');
+        return [];
+      }
+
       const response = await axios.get(`${BASE_URL}/matches`, {
         params: {
           apikey: API_KEY,
@@ -109,7 +120,8 @@ export const cricketApi = {
         },
       });
 
-      return response.data.data.map((match: any) => ({
+      const data = response.data as { data: Array<{ teams: string[], runs?: number, balls?: number, venue?: string }> };
+      return data.data.map(match => ({
         match: `${match.teams[0]} vs ${match.teams[1]}`,
         runs: match.runs || 0,
         balls: match.balls || 0,
