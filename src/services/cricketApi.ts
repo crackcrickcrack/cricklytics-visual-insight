@@ -4,6 +4,13 @@ import axios from 'axios';
 const API_KEY = import.meta.env.VITE_API_KEY;
 const BASE_URL = import.meta.env.VITE_API_URL || 'https://api.cricapi.com/v1';
 
+// Debug logging
+console.log('API Configuration:', {
+  hasApiKey: !!API_KEY,
+  baseUrl: BASE_URL,
+  env: import.meta.env
+});
+
 interface PlayerStats {
   matches: number;
   runs: number;
@@ -45,10 +52,11 @@ export const cricketApi = {
   async getPlayerStats(playerId: string): Promise<PlayerData | null> {
     try {
       if (!API_KEY) {
-        console.error('API key is not configured');
+        console.error('API key is not configured. Please check your .env file.');
         return null;
       }
 
+      console.log('Fetching player stats for ID:', playerId);
       const response = await axios.get(`${BASE_URL}/players`, {
         params: {
           apikey: API_KEY,
@@ -56,8 +64,11 @@ export const cricketApi = {
         },
       });
 
+      console.log('API Response:', response.data);
+
       const data = response.data as { data?: Array<any> };
       if (!data.data || data.data.length === 0) {
+        console.error('No player data found for ID:', playerId);
         return null;
       }
 
@@ -100,8 +111,16 @@ export const cricketApi = {
         },
         recentForm: await cricketApi.getRecentForm(playerId),
       };
-    } catch (error) {
-      console.error('Error fetching player stats:', error);
+    } catch (error: any) {
+      console.error('API Error:', {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+        config: {
+          url: error.config?.url,
+          params: error.config?.params,
+        }
+      });
       return null;
     }
   },
@@ -109,10 +128,11 @@ export const cricketApi = {
   async getRecentForm(playerId: string) {
     try {
       if (!API_KEY) {
-        console.error('API key is not configured');
+        console.error('API key is not configured. Please check your .env file.');
         return [];
       }
 
+      console.log('Fetching recent form for player ID:', playerId);
       const response = await axios.get(`${BASE_URL}/matches`, {
         params: {
           apikey: API_KEY,
@@ -121,6 +141,8 @@ export const cricketApi = {
         },
       });
 
+      console.log('Recent Form Response:', response.data);
+
       const data = response.data as { data: Array<{ teams: string[], runs?: number, balls?: number, venue?: string }> };
       return data.data.map(match => ({
         match: `${match.teams[0]} vs ${match.teams[1]}`,
@@ -128,8 +150,16 @@ export const cricketApi = {
         balls: match.balls || 0,
         venue: match.venue || 'Unknown',
       }));
-    } catch (error) {
-      console.error('Error fetching recent form:', error);
+    } catch (error: any) {
+      console.error('API Error:', {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+        config: {
+          url: error.config?.url,
+          params: error.config?.params,
+        }
+      });
       return [];
     }
   },
