@@ -66,6 +66,10 @@ const performanceTrends = [
 const Index = () => {
   const { isDark, toggleTheme } = useTheme();
 
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = '/images/placeholder.jpg';
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Navbar toggleTheme={toggleTheme} isDark={isDark} />
@@ -89,7 +93,9 @@ const Index = () => {
                         {match.teams.map((team, index) => (
                           <div key={index} className="flex items-center justify-between">
                             <div className="flex items-center space-x-3">
-                              <img src={`/flags/${team.shortName.toLowerCase()}.png`} alt={team.name} className="w-8 h-8" />
+                              <div className="w-8 h-8 bg-muted rounded-full flex items-center justify-center">
+                                <span className="text-xs font-medium">{team.shortName}</span>
+                              </div>
                               <span className="font-medium">{team.name}</span>
                             </div>
                             {team.score && (
@@ -117,8 +123,10 @@ const Index = () => {
                 {featuredArticles.map((article) => (
                   <Card key={article.id} className="hover:shadow-lg transition-shadow">
                     <CardContent className="p-6">
-                      <div className="aspect-video relative mb-4 rounded-lg overflow-hidden">
-                        <img src={article.image} alt={article.title} className="object-cover w-full h-full" />
+                      <div className="aspect-video relative mb-4 rounded-lg overflow-hidden bg-muted">
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="text-muted-foreground">Image Placeholder</span>
+                        </div>
                       </div>
                       <div className="flex items-center space-x-2 mb-2">
                         <span className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">{article.category}</span>
