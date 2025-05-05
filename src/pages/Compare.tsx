@@ -5,33 +5,52 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ScatterChart, Scatter, ZAxis } from 'recharts';
 import RadarPlayerChart from '@/components/RadarPlayerChart';
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import PlayerCard from '@/components/PlayerCard';
 
-// Updated player options with current players
+// Updated player options with current players and image URLs
 const playerOptions = [
-{ id: '1', name: 'Virat Kohli', country: 'India' },
-{ id: '2', name: 'Joe Root', country: 'England' },
-{ id: '3', name: 'Kane Williamson', country: 'New Zealand' },
-{ id: '4', name: 'Babar Azam', country: 'Pakistan' },
-{ id: '5', name: 'Steve Smith', country: 'Australia' },
-{ id: '6', name: 'Jasprit Bumrah', country: 'India' },
-{ id: '7', name: 'Pat Cummins', country: 'Australia' },
-{ id: '8', name: 'Ben Stokes', country: 'England' },
+{ id: '1', name: 'Virat Kohli', country: 'India', role: 'Batsman', imageUrl: '/images/players/virat-kohli.jpg' },
+{ id: '2', name: 'Joe Root', country: 'England', role: 'Batsman', imageUrl: '/images/players/joe-root.jpg' },
+{ id: '3', name: 'Kane Williamson', country: 'New Zealand', role: 'Batsman', imageUrl: '/images/players/kane-williamson.jpg' },
+{ id: '4', name: 'Babar Azam', country: 'Pakistan', role: 'Batsman', imageUrl: '/images/players/babar-azam.jpg' },
+{ id: '5', name: 'Steve Smith', country: 'Australia', role: 'Batsman', imageUrl: '/images/players/steve-smith.jpg' },
+{ id: '6', name: 'Jasprit Bumrah', country: 'India', role: 'Bowler', imageUrl: '/images/players/jasprit-bumrah.jpg' },
+{ id: '7', name: 'Pat Cummins', country: 'Australia', role: 'Bowler', imageUrl: '/images/players/pat-cummins.jpg' },
+{ id: '8', name: 'Ben Stokes', country: 'England', role: 'All-rounder', imageUrl: '/images/players/ben-stokes.jpg' },
 ];
 
-// Updated player detailed data with current stats from ESPNCricinfo (as of 2023)
-const playerData: Record<string, {
-name: string;
-skills: { name: string; value: number }[];
-color: string;
-stats: Record<string, string | number>;
-recentForm: { match: string; score: string; result: string }[];
-venueStats: { name: string; value: number }[];
-}> = {
+// Update the recentForm type to include venue
+type RecentForm = {
+  match: string;
+  score: string;
+  result: string;
+  venue?: string;
+};
+
+// Update the PlayerData type to use the new RecentForm type
+type PlayerData = {
+  name: string;
+  skills: { name: string; value: number }[];
+  color: string;
+  stats: Record<string, string | number>;
+  recentForm: RecentForm[];
+  venueStats: { name: string; value: number }[];
+  batting?: {
+    byPhase: {
+      powerplay: { runs: number; average: number; strikeRate: number };
+      middle: { runs: number; average: number; strikeRate: number };
+      death: { runs: number; average: number; strikeRate: number };
+    };
+    shotAnalysis: { shot: string; success: number; runs: number }[];
+  };
+};
+
+// Update the playerData object to include venue in recentForm
+const playerData: Record<string, PlayerData> = {
 '1': {
 name: "Virat Kohli",
 skills: [
@@ -53,11 +72,11 @@ fifties: 72,
 bestScore: "254*"
 },
 recentForm: [
-{ match: "vs AUS", score: "121", result: "W" },
-{ match: "vs ENG", score: "76", result: "W" },
-{ match: "vs NZ", score: "45", result: "L" },
-{ match: "vs SA", score: "83", result: "W" },
-{ match: "vs WI", score: "38", result: "W" },
+{ match: "vs AUS", score: "121", result: "W", venue: "MCG" },
+{ match: "vs ENG", score: "76", result: "W", venue: "Lords" },
+{ match: "vs NZ", score: "45", result: "L", venue: "Eden Park" },
+{ match: "vs SA", score: "83", result: "W", venue: "Wanderers" },
+{ match: "vs WI", score: "38", result: "W", venue: "Kensington Oval" },
 ],
 venueStats: [
 { name: 'Home', value: 7765 },
@@ -86,11 +105,11 @@ fifties: 62,
 bestScore: "254"
 },
 recentForm: [
-{ match: "vs IND", score: "86", result: "L" },
-{ match: "vs AUS", score: "118", result: "W" },
-{ match: "vs PAK", score: "103", result: "W" },
-{ match: "vs NZ", score: "57", result: "L" },
-{ match: "vs WI", score: "153", result: "W" },
+{ match: "vs IND", score: "86", result: "L", venue: "MCG" },
+{ match: "vs AUS", score: "118", result: "W", venue: "Lords" },
+{ match: "vs PAK", score: "103", result: "W", venue: "MCG" },
+{ match: "vs NZ", score: "57", result: "L", venue: "Eden Park" },
+{ match: "vs WI", score: "153", result: "W", venue: "MCG" },
 ],
 venueStats: [
 { name: 'Home', value: 6084 },
@@ -119,11 +138,11 @@ fifties: 33,
 bestScore: "251"
 },
 recentForm: [
-{ match: "vs ENG", score: "132", result: "W" },
-{ match: "vs IND", score: "57", result: "L" },
-{ match: "vs AUS", score: "45", result: "L" },
-{ match: "vs SA", score: "91", result: "W" },
-{ match: "vs PAK", score: "104", result: "W" },
+{ match: "vs ENG", score: "132", result: "W", venue: "MCG" },
+{ match: "vs IND", score: "57", result: "L", venue: "MCG" },
+{ match: "vs AUS", score: "45", result: "L", venue: "Eden Park" },
+{ match: "vs SA", score: "91", result: "W", venue: "MCG" },
+{ match: "vs PAK", score: "104", result: "W", venue: "MCG" },
 ],
 venueStats: [
 { name: 'Home', value: 4562 },
@@ -152,11 +171,11 @@ fifties: 26,
 bestScore: "196"
 },
 recentForm: [
-{ match: "vs SA", score: "103", result: "W" },
-{ match: "vs NZ", score: "71", result: "W" },
-{ match: "vs ENG", score: "84", result: "L" },
-{ match: "vs AUS", score: "34", result: "L" },
-{ match: "vs WI", score: "114", result: "W" },
+{ match: "vs SA", score: "103", result: "W", venue: "MCG" },
+{ match: "vs NZ", score: "71", result: "W", venue: "MCG" },
+{ match: "vs ENG", score: "84", result: "L", venue: "MCG" },
+{ match: "vs AUS", score: "34", result: "L", venue: "MCG" },
+{ match: "vs WI", score: "114", result: "W", venue: "MCG" },
 ],
 venueStats: [
 { name: 'Home', value: 2587 },
@@ -185,11 +204,11 @@ fifties: 39,
 bestScore: "239"
 },
 recentForm: [
-{ match: "vs IND", score: "131", result: "W" },
-{ match: "vs PAK", score: "78", result: "W" },
-{ match: "vs NZ", score: "85", result: "W" },
-{ match: "vs ENG", score: "144", result: "W" },
-{ match: "vs SA", score: "32", result: "L" },
+{ match: "vs IND", score: "131", result: "W", venue: "MCG" },
+{ match: "vs PAK", score: "78", result: "W", venue: "MCG" },
+{ match: "vs NZ", score: "85", result: "W", venue: "MCG" },
+{ match: "vs ENG", score: "144", result: "W", venue: "MCG" },
+{ match: "vs SA", score: "32", result: "L", venue: "MCG" },
 ],
 venueStats: [
 { name: 'Home', value: 5107 },
@@ -217,11 +236,11 @@ fiveWickets: 10,
 best: "6/27"
 },
 recentForm: [
-{ match: "vs AUS", score: "5/42", result: "W" },
-{ match: "vs ENG", score: "4/25", result: "W" },
-{ match: "vs NZ", score: "2/39", result: "L" },
-{ match: "vs SA", score: "5/32", result: "W" },
-{ match: "vs WI", score: "3/28", result: "W" },
+{ match: "vs AUS", score: "5/42", result: "W", venue: "MCG" },
+{ match: "vs ENG", score: "4/25", result: "W", venue: "MCG" },
+{ match: "vs NZ", score: "2/39", result: "L", venue: "Eden Park" },
+{ match: "vs SA", score: "5/32", result: "W", venue: "MCG" },
+{ match: "vs WI", score: "3/28", result: "W", venue: "MCG" },
 ],
 venueStats: [
 { name: 'Home', value: 156 },
@@ -249,11 +268,11 @@ fiveWickets: 9,
 best: "6/23"
 },
 recentForm: [
-{ match: "vs IND", score: "4/39", result: "W" },
-{ match: "vs PAK", score: "2/42", result: "W" },
-{ match: "vs NZ", score: "3/38", result: "W" },
-{ match: "vs ENG", score: "5/28", result: "W" },
-{ match: "vs SA", score: "1/52", result: "L" },
+{ match: "vs IND", score: "4/39", result: "W", venue: "MCG" },
+{ match: "vs PAK", score: "2/42", result: "W", venue: "MCG" },
+{ match: "vs NZ", score: "3/38", result: "W", venue: "MCG" },
+{ match: "vs ENG", score: "5/28", result: "W", venue: "MCG" },
+{ match: "vs SA", score: "1/52", result: "L", venue: "MCG" },
 ],
 venueStats: [
 { name: 'Home', value: 187 },
@@ -285,11 +304,11 @@ economy: 3.24,
 best: "6/22"
 },
 recentForm: [
-{ match: "vs IND", score: "82 & 2/45", result: "L" },
-{ match: "vs AUS", score: "103 & 1/56", result: "W" },
-{ match: "vs PAK", score: "67 & 3/23", result: "W" },
-{ match: "vs SA", score: "46 & 0/61", result: "L" },
-{ match: "vs WI", score: "155 & 2/34", result: "W" },
+{ match: "vs IND", score: "82 & 2/45", result: "L", venue: "MCG" },
+{ match: "vs AUS", score: "103 & 1/56", result: "W", venue: "MCG" },
+{ match: "vs PAK", score: "67 & 3/23", result: "W", venue: "MCG" },
+{ match: "vs SA", score: "46 & 0/61", result: "L", venue: "MCG" },
+{ match: "vs WI", score: "155 & 2/34", result: "W", venue: "MCG" },
 ],
 venueStats: [
 { name: 'Home', value: 3754 },
@@ -299,10 +318,23 @@ venueStats: [
 },
 };
 
+// Define the PlayerStats type
+type PlayerStats = {
+  matches: number;
+  runs?: number;
+  average?: number;
+  wickets?: number;
+  economy?: number;
+  hundreds?: number;
+  fifties?: number;
+  best?: string;
+};
+
 const Compare = () => {
 const { isDark, toggleTheme } = useTheme();
 const [player1, setPlayer1] = useState<string>('1');
 const [player2, setPlayer2] = useState<string>('2');
+const [activeTab, setActiveTab] = useState('overall');
 const [error, setError] = useState<string | null>(null);
 
 // Validate selected players exist in data
@@ -409,15 +441,17 @@ const getPlayerCardData = (playerId: string) => {
 if (!playerData[playerId]) return null;
 
 const player = playerData[playerId];
+const playerOption = playerOptions.find(p => p.id === playerId);
 const isBowler = 'wickets' in player.stats;
 
 return {
 id: playerId,
 name: player.name,
-country: playerOptions.find(p => p.id === playerId)?.country || '',
+country: playerOption?.country || '',
 role: isBowler ? 
 ('runs' in player.stats ? 'All-Rounder' : 'Bowler') : 
 'Batsman',
+imageUrl: playerOption?.imageUrl,
 stats: {
 matches: Number(player.stats.matches),
 runs: 'runs' in player.stats ? Number(player.stats.runs) : undefined,
@@ -428,8 +462,51 @@ hundreds: 'hundreds' in player.stats ? Number(player.stats.hundreds) : undefined
 fifties: 'fifties' in player.stats ? Number(player.stats.fifties) : undefined,
 best: 'best' in player.stats ? String(player.stats.best) : 
 'bestScore' in player.stats ? String(player.stats.bestScore) : undefined,
-}
+} as PlayerStats
 };
+
+// Update the getPhaseComparisonData function to handle optional batting data
+const getPhaseComparisonData = () => {
+const p1 = playerData[player1];
+const p2 = playerData[player2];
+
+if (!p1.batting || !p2.batting) {
+return [];
+}
+
+return [
+{
+name: 'Powerplay',
+[p1.name]: p1.batting.byPhase.powerplay.average,
+[p2.name]: p2.batting.byPhase.powerplay.average,
+},
+{
+name: 'Middle Overs',
+[p1.name]: p1.batting.byPhase.middle.average,
+[p2.name]: p2.batting.byPhase.middle.average,
+},
+{
+name: 'Death Overs',
+[p1.name]: p1.batting.byPhase.death.average,
+[p2.name]: p2.batting.byPhase.death.average,
+},
+];
+};
+
+// Update the getShotAnalysisData function to handle optional batting data
+const getShotAnalysisData = () => {
+const p1 = playerData[player1];
+const p2 = playerData[player2];
+
+if (!p1.batting || !p2.batting) {
+return [];
+}
+
+return p1.batting.shotAnalysis.map((shot, index) => ({
+shot: shot.shot,
+[p1.name]: shot.success,
+[p2.name]: p2.batting!.shotAnalysis[index].success,
+}));
 };
 
 return (
@@ -471,7 +548,26 @@ return (
 
 {player1Data && getPlayerCardData(player1) && (
 <div className="mt-4">
-<PlayerCard player={getPlayerCardData(player1)!} />
+<PlayerCard 
+  player={{
+    id: player1,
+    name: player1Data.name,
+    country: playerOptions.find(p => p.id === player1)?.country || '',
+    role: playerOptions.find(p => p.id === player1)?.role || '',
+    stats: {
+      matches: Number(player1Data.stats.matches),
+      runs: 'runs' in player1Data.stats ? Number(player1Data.stats.runs) : undefined,
+      average: 'average' in player1Data.stats ? Number(player1Data.stats.average) : undefined,
+      wickets: 'wickets' in player1Data.stats ? Number(player1Data.stats.wickets) : undefined,
+      economy: 'economy' in player1Data.stats ? Number(player1Data.stats.economy) : undefined,
+      hundreds: 'hundreds' in player1Data.stats ? Number(player1Data.stats.hundreds) : undefined,
+      fifties: 'fifties' in player1Data.stats ? Number(player1Data.stats.fifties) : undefined,
+      best: 'best' in player1Data.stats ? String(player1Data.stats.best) : 
+            'bestScore' in player1Data.stats ? String(player1Data.stats.bestScore) : undefined,
+    } as PlayerStats,
+    imageUrl: playerOptions.find(p => p.id === player1)?.imageUrl
+  }} 
+/>
 </div>
 )}
 </CardContent>
@@ -498,7 +594,26 @@ return (
 
 {player2Data && getPlayerCardData(player2) && (
 <div className="mt-4">
-<PlayerCard player={getPlayerCardData(player2)!} />
+<PlayerCard 
+  player={{
+    id: player2,
+    name: player2Data.name,
+    country: playerOptions.find(p => p.id === player2)?.country || '',
+    role: playerOptions.find(p => p.id === player2)?.role || '',
+    stats: {
+      matches: Number(player2Data.stats.matches),
+      runs: 'runs' in player2Data.stats ? Number(player2Data.stats.runs) : undefined,
+      average: 'average' in player2Data.stats ? Number(player2Data.stats.average) : undefined,
+      wickets: 'wickets' in player2Data.stats ? Number(player2Data.stats.wickets) : undefined,
+      economy: 'economy' in player2Data.stats ? Number(player2Data.stats.economy) : undefined,
+      hundreds: 'hundreds' in player2Data.stats ? Number(player2Data.stats.hundreds) : undefined,
+      fifties: 'fifties' in player2Data.stats ? Number(player2Data.stats.fifties) : undefined,
+      best: 'best' in player2Data.stats ? String(player2Data.stats.best) : 
+            'bestScore' in player2Data.stats ? String(player2Data.stats.bestScore) : undefined,
+    } as PlayerStats,
+    imageUrl: playerOptions.find(p => p.id === player2)?.imageUrl
+  }} 
+/>
 </div>
 )}
 </CardContent>
@@ -578,8 +693,10 @@ return [value, name];
 <div className={`w-3 h-3 rounded-full mr-3 ${
 match.result === 'W' ? 'bg-green-500' : match.result === 'L' ? 'bg-red-500' : 'bg-yellow-500'
 }`}></div>
-<span className="flex-1">{match.match}</span>
-<span className="font-semibold">{match.score}</span>
+<div>
+  <p className="font-medium">{match.match}</p>
+  <p className="text-sm text-muted-foreground">{match.venue || 'Unknown'}</p>
+</div>
 </div>
 ))}
 </div>
@@ -597,8 +714,10 @@ match.result === 'W' ? 'bg-green-500' : match.result === 'L' ? 'bg-red-500' : 'b
 <div className={`w-3 h-3 rounded-full mr-3 ${
 match.result === 'W' ? 'bg-green-500' : match.result === 'L' ? 'bg-red-500' : 'bg-yellow-500'
 }`}></div>
-<span className="flex-1">{match.match}</span>
-<span className="font-semibold">{match.score}</span>
+<div>
+  <p className="font-medium">{match.match}</p>
+  <p className="text-sm text-muted-foreground">{match.venue || 'Unknown'}</p>
+</div>
 </div>
 ))}
 </div>
@@ -692,6 +811,179 @@ Based on form analysis, {player1Data.name} is performing 15% better in recent ma
 </div>
 </div>
 )}
+
+<Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+<TabsList className="grid w-full grid-cols-4 mb-8">
+<TabsTrigger value="overall">Overall Stats</TabsTrigger>
+<TabsTrigger value="phases">Phase Analysis</TabsTrigger>
+<TabsTrigger value="shots">Shot Analysis</TabsTrigger>
+<TabsTrigger value="form">Recent Form</TabsTrigger>
+</TabsList>
+
+<TabsContent value="overall" className="space-y-8">
+<Card>
+<CardHeader>
+<CardTitle>Overall Batting Comparison</CardTitle>
+</CardHeader>
+<CardContent>
+<div className="h-[400px]">
+<ResponsiveContainer width="100%" height="100%">
+<BarChart data={[
+{
+name: 'Runs',
+[playerData[player1].name]: 
+playerData[player1].stats.runs,
+[playerData[player2].name]: 
+playerData[player2].stats.runs,
+},
+{
+name: 'Average',
+[playerData[player1].name]: 
+playerData[player1].stats.average,
+[playerData[player2].name]: 
+playerData[player2].stats.average,
+},
+{
+name: 'Strike Rate',
+[playerData[player1].name]: 
+playerData[player1].stats.strikeRate,
+[playerData[player2].name]: 
+playerData[player2].stats.strikeRate,
+},
+]}>
+<CartesianGrid strokeDasharray="3 3" opacity={0.2} />
+<XAxis dataKey="name" />
+<YAxis />
+<Tooltip />
+<Legend />
+<Bar
+dataKey={playerData[player1].name}
+fill={playerData[player1].color}
+radius={[4, 4, 0, 0]}
+/>
+<Bar
+dataKey={playerData[player2].name}
+fill={playerData[player2].color}
+radius={[4, 4, 0, 0]}
+/>
+</BarChart>
+</ResponsiveContainer>
+</div>
+</CardContent>
+</Card>
+</TabsContent>
+
+<TabsContent value="phases" className="space-y-8">
+<Card>
+<CardHeader>
+<CardTitle>Phase-wise Performance</CardTitle>
+</CardHeader>
+<CardContent>
+<div className="h-[400px]">
+<ResponsiveContainer width="100%" height="100%">
+<LineChart data={getPhaseComparisonData()}>
+<CartesianGrid strokeDasharray="3 3" opacity={0.2} />
+<XAxis dataKey="name" />
+<YAxis />
+<Tooltip />
+<Legend />
+<Line
+type="monotone"
+dataKey={playerData[player1].name}
+stroke={playerData[player1].color}
+strokeWidth={2}
+/>
+<Line
+type="monotone"
+dataKey={playerData[player2].name}
+stroke={playerData[player2].color}
+strokeWidth={2}
+/>
+</LineChart>
+</ResponsiveContainer>
+</div>
+</CardContent>
+</Card>
+</TabsContent>
+
+<TabsContent value="shots" className="space-y-8">
+<Card>
+<CardHeader>
+<CardTitle>Shot Analysis</CardTitle>
+</CardHeader>
+<CardContent>
+<div className="h-[400px]">
+<ResponsiveContainer width="100%" height="100%">
+<ScatterChart>
+<CartesianGrid strokeDasharray="3 3" opacity={0.2} />
+<XAxis type="number" dataKey={playerData[player1].name} name="Success Rate" unit="%" />
+<YAxis type="number" dataKey={playerData[player2].name} name="Success Rate" unit="%" />
+<Tooltip cursor={{ strokeDasharray: '3 3' }} />
+<Legend />
+<Scatter
+name="Shot Comparison"
+data={getShotAnalysisData()}
+fill={playerData[player1].color}
+/>
+</ScatterChart>
+</ResponsiveContainer>
+</div>
+</CardContent>
+</Card>
+</TabsContent>
+
+<TabsContent value="form" className="space-y-8">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+<Card>
+<CardHeader>
+<CardTitle>{playerData[player1].name}'s Recent Form</CardTitle>
+</CardHeader>
+<CardContent>
+<div className="space-y-4">
+{playerData[player1].recentForm.map((match, index) => (
+<div key={index} className="flex items-center justify-between p-4 bg-muted/30 rounded-lg">
+<div>
+<p className="font-medium">{match.match}</p>
+<p className="text-sm text-muted-foreground">{match.venue || 'Unknown'}</p>
+</div>
+<div className="text-right">
+<p className="font-bold">{match.score}</p>
+<p className={`text-sm ${match.result === 'W' ? 'text-green-500' : 'text-red-500'}`}>
+{match.result === 'W' ? 'Won' : 'Lost'}
+</p>
+</div>
+</div>
+))}
+</div>
+</CardContent>
+</Card>
+
+<Card>
+<CardHeader>
+<CardTitle>{playerData[player2].name}'s Recent Form</CardTitle>
+</CardHeader>
+<CardContent>
+<div className="space-y-4">
+{playerData[player2].recentForm.map((match, index) => (
+<div key={index} className="flex items-center justify-between p-4 bg-muted/30 rounded-lg">
+<div>
+<p className="font-medium">{match.match}</p>
+<p className="text-sm text-muted-foreground">{match.venue || 'Unknown'}</p>
+</div>
+<div className="text-right">
+<p className="font-bold">{match.score}</p>
+<p className={`text-sm ${match.result === 'W' ? 'text-green-500' : 'text-red-500'}`}>
+{match.result === 'W' ? 'Won' : 'Lost'}
+</p>
+</div>
+</div>
+))}
+</div>
+</CardContent>
+</Card>
+</div>
+</TabsContent>
+</Tabs>
 </div>
 </main>
 </div>
