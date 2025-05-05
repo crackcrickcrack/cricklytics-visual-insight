@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -19,10 +20,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["'Montserrat'", "system-ui", "sans-serif"],
+        sans: ["'Roboto'", "system-ui", "sans-serif"],
         display: ["'Bebas Neue'", "'Impact'", "sans-serif"],
-        action: ["'Teko'", "sans-serif"],
-        headline: ["'Anton'", "sans-serif"],
+        headline: ["'Bebas Neue'", "'Impact'", "sans-serif"],
+        action: ["'Bebas Neue'", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",

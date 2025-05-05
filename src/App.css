@@ -11,6 +11,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: textShine 3s ease-in-out infinite alternate;
+  background-image: linear-gradient(to right, #0057FF, #00E267, #FFD600);
 }
 
 @keyframes textShine {
@@ -58,4 +59,43 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* Typography enhancements */
+h1 {
+  font-size: 3rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: 2.25rem;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: 1.875rem;
+  line-height: 1.2;
+}
+
+.display-text {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+}
+
+/* Accessibility improvements */
+@media (max-width: 640px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  .display-text {
+    letter-spacing: -0.01em;
+  }
 }

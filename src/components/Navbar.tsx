@@ -32,22 +32,22 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDark }) => {
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <span className="text-3xl font-headline tracking-tight">CRICK<span className="text-cricket-blue">6</span></span>
+              <span className="text-3xl font-display tracking-tight">CRICK<span className="text-cricket-blue">6</span></span>
             </Link>
           </div>
           
           <div className="hidden md:flex items-center space-x-1">
-            <Link to="/" className="px-4 py-2 rounded-lg text-base font-medium hover:bg-muted transition-colors">
-              HOME
+            <Link to="/" className="px-4 py-2 rounded-lg text-base font-sans font-medium hover:bg-muted transition-colors">
+              Home
             </Link>
-            <Link to="/dashboard" className="px-4 py-2 rounded-lg text-base font-medium hover:bg-muted transition-colors">
-              STATS
+            <Link to="/dashboard" className="px-4 py-2 rounded-lg text-base font-sans font-medium hover:bg-muted transition-colors">
+              Stats
             </Link>
-            <Link to="/compare" className="px-4 py-2 rounded-lg text-base font-medium hover:bg-muted transition-colors">
-              COMPARE
+            <Link to="/compare" className="px-4 py-2 rounded-lg text-base font-sans font-medium hover:bg-muted transition-colors">
+              Compare
             </Link>
-            <Link to="/matches" className="px-4 py-2 rounded-lg text-base font-medium hover:bg-muted transition-colors">
-              MATCHES
+            <Link to="/matches" className="px-4 py-2 rounded-lg text-base font-sans font-medium hover:bg-muted transition-colors">
+              Matches
             </Link>
             <Button
               variant="ghost"
@@ -82,34 +82,34 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDark }) => {
           <div className="px-4 pt-2 pb-4 space-y-3">
             <Link 
               to="/" 
-              className="block px-4 py-3 rounded-lg text-base font-medium hover:bg-muted transition-colors"
+              className="block px-4 py-3 rounded-lg text-base font-sans font-medium hover:bg-muted transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
-              HOME
+              Home
             </Link>
             <Link 
               to="/dashboard" 
-              className="block px-4 py-3 rounded-lg text-base font-medium hover:bg-muted transition-colors"
+              className="block px-4 py-3 rounded-lg text-base font-sans font-medium hover:bg-muted transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
-              STATS
+              Stats
             </Link>
             <Link 
               to="/compare" 
-              className="block px-4 py-3 rounded-lg text-base font-medium hover:bg-muted transition-colors"
+              className="block px-4 py-3 rounded-lg text-base font-sans font-medium hover:bg-muted transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
-              COMPARE
+              Compare
             </Link>
             <Link 
               to="/matches" 
-              className="block px-4 py-3 rounded-lg text-base font-medium hover:bg-muted transition-colors"
+              className="block px-4 py-3 rounded-lg text-base font-sans font-medium hover:bg-muted transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
-              MATCHES
+              Matches
             </Link>
             <div className="flex items-center justify-between px-4 py-3">
-              <span className="text-base font-medium">THEME</span>
+              <span className="text-base font-sans font-medium">Theme</span>
               <Button
                 variant="ghost"
                 size="sm"

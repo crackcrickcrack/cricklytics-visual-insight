@@ -13,7 +13,7 @@ const StatHighlight: React.FC<StatHighlightProps> = ({ title, value, icon, trend
   return (
     <div className="rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm p-5 transition-all duration-300 hover:border-white/20 hover:shadow-lg">
       <div className="flex justify-between items-start">
-        <h3 className="font-action text-sm uppercase tracking-wider opacity-70">{title}</h3>
+        <h3 className="font-display text-sm uppercase tracking-wider opacity-70">{title}</h3>
         {icon && <div className="text-cricket-green">{icon}</div>}
       </div>
       <div className="mt-4">
@@ -40,7 +40,7 @@ const StatHighlight: React.FC<StatHighlightProps> = ({ title, value, icon, trend
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14" />
               </svg>
             )}
-            <span className="font-medium font-action uppercase tracking-wider text-xs">{trendValue}</span>
+            <span className="font-sans font-medium text-xs">{trendValue}</span>
           </div>
         )}
       </div>
