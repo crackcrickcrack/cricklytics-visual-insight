@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700;800&family=Teko:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,7 +7,7 @@
 
 @layer base {
   :root {
-    --background: 220 33% 98%;
+    --background: 210 50% 98%;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -16,10 +16,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 196 97% 39%;
+    --primary: 246 100% 50%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 162 100% 38%;
+    --secondary: 153 100% 45%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
@@ -33,25 +33,25 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 196 97% 39%;
+    --ring: 246 100% 50%;
 
     --radius: 0.75rem;
   }
 
   .dark {
-    --background: 221 56% 7%;
+    --background: 240 24% 6%;
     --foreground: 210 40% 98%;
 
-    --card: 222 47% 10%;
+    --card: 240 21% 10%;
     --card-foreground: 210 40% 98%;
 
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 196 97% 39%;
+    --primary: 246 100% 60%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 162 100% 38%;
+    --secondary: 153 100% 45%;
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
@@ -65,7 +65,7 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 196 97% 39%;
+    --ring: 246 100% 60%;
   }
 }
 
@@ -76,8 +76,11 @@
   body {
     @apply bg-background text-foreground font-sans;
   }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-bold;
+  h1, h2, h3 {
+    @apply font-headline tracking-tight;
+  }
+  h4, h5, h6 {
+    @apply font-display tracking-wide;
   }
 }
 
@@ -95,42 +98,49 @@
     @apply bg-gradient-to-br from-cricket-blue via-cricket-purple to-cricket-pink;
   }
   .hero-pattern {
-    background-color: #0A1124;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-    background-size: 20px 20px;
+    background-color: #080E21;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   }
-  .clip-slant {
-    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+  .slant-edge {
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
   }
-  .clip-slant-reverse {
-    clip-path: polygon(0 0, 100% 15%, 100% 100%, 0 100%);
+  .slant-edge-reverse {
+    clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%);
   }
-  .clip-diagonal {
-    clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
+  
+  .cricket-button {
+    @apply font-action uppercase tracking-wide font-bold py-3 px-6 text-lg rounded-lg transition-all duration-300 inline-flex items-center gap-2;
   }
-  .card-shine {
-    position: relative;
-    overflow: hidden;
+  
+  .cricket-button-primary {
+    @apply cricket-button bg-cricket-blue text-white hover:scale-105 hover:shadow-lg hover:shadow-cricket-blue/20;
   }
-  .card-shine::after {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-      to bottom right,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.1) 50%,
-      rgba(255, 255, 255, 0) 100%
-    );
-    transform: rotate(30deg);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
+  
+  .cricket-button-secondary {
+    @apply cricket-button bg-cricket-green text-cricket-dark hover:scale-105 hover:shadow-lg hover:shadow-cricket-green/20;
   }
-  .card-shine:hover::after {
-    opacity: 1;
+
+  .cricket-button-accent {
+    @apply cricket-button bg-cricket-yellow text-cricket-dark hover:scale-105 hover:shadow-lg hover:shadow-cricket-yellow/20;
+  }
+
+  .cricket-button-outline {
+    @apply cricket-button bg-transparent border-2 border-white text-white hover:bg-white/10;
+  }
+  
+  .cricket-heading {
+    @apply font-headline uppercase tracking-tight;
+  }
+  
+  .cricket-display {
+    @apply font-display uppercase tracking-widest;
+  }
+  
+  .format-badge {
+    @apply font-action font-bold text-sm tracking-widest uppercase px-3 py-1 rounded-full;
+  }
+  
+  .glass-panel {
+    @apply backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl;
   }
 }

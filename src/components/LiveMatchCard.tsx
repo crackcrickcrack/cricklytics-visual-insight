@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { Card } from '@/components/ui/card';
 
 interface Team {
   name: string;
@@ -37,59 +36,59 @@ const LiveMatchCard: React.FC<LiveMatchCardProps> = ({ match }) => {
 
   // Format-specific backgrounds
   const formatBgs = {
-    "T20": "bg-cricket-purple",
+    "T20": "bg-cricket-pink",
     "ODI": "bg-cricket-blue",
     "Test": "bg-cricket-green"
   };
   
   return (
-    <Card className="overflow-hidden card-shine group hover:shadow-2xl transition-all duration-300 rounded-2xl border-0 shadow-lg">
-      <div className={`p-3 bg-gradient-to-r ${formatColors[format]} text-white flex justify-between items-center`}>
-        <span className="font-extrabold tracking-wider uppercase">{format}</span>
+    <div className="rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border border-white/5 bg-card hover:border-white/10 group">
+      <div className={`p-4 bg-gradient-to-r ${formatColors[format]} text-white flex justify-between items-center`}>
+        <span className="font-action text-lg tracking-widest uppercase">{format}</span>
         {isLive && (
-          <div className="flex items-center bg-white/20 rounded-full px-2 py-0.5">
-            <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse mr-1"></span>
-            <span className="font-semibold text-sm uppercase tracking-wide">LIVE</span>
+          <div className="flex items-center bg-white/20 rounded-full px-3 py-1">
+            <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse mr-2"></span>
+            <span className="font-action uppercase tracking-wider text-sm">LIVE</span>
           </div>
         )}
       </div>
       
-      <div className="bg-white dark:bg-card p-5">
-        <div className="mb-6 space-y-5">
+      <div className="p-5">
+        <div className="mb-6 space-y-6">
           {/* Team 1 */}
           <div className="flex justify-between items-center">
-            <div className="flex items-center gap-3">
-              <div className={`w-12 h-12 ${formatBgs[format]} rounded-xl flex items-center justify-center text-white font-bold`}>
+            <div className="flex items-center gap-4">
+              <div className={`w-14 h-14 ${formatBgs[format]} rounded-xl flex items-center justify-center text-white font-headline text-2xl`}>
                 {team1.shortName}
               </div>
               <div className="text-left">
-                <span className="font-bold text-lg">{team1.name}</span>
+                <span className="font-display uppercase tracking-wide text-lg block">{team1.name}</span>
                 {team1.score && (
-                  <p className="font-extrabold text-xl mt-0.5">
+                  <p className="font-headline text-2xl mt-1">
                     {team1.score}/{team1.wickets} 
-                    <span className="text-xs font-normal ml-1">({team1.overs} ov)</span>
+                    <span className="text-xs font-medium ml-2 opacity-70">({team1.overs} ov)</span>
                   </p>
                 )}
               </div>
             </div>
           </div>
           
-          <div className="text-center font-bold text-sm text-muted-foreground">
-            VS
+          <div className="text-center font-bold text-xs text-muted-foreground uppercase tracking-widest">
+            VERSUS
           </div>
           
           {/* Team 2 */}
           <div className="flex justify-between items-center">
-            <div className="flex items-center gap-3">
-              <div className={`w-12 h-12 ${formatBgs[format]}/80 rounded-xl flex items-center justify-center text-white font-bold`}>
+            <div className="flex items-center gap-4">
+              <div className={`w-14 h-14 ${formatBgs[format]}/80 rounded-xl flex items-center justify-center text-white font-headline text-2xl`}>
                 {team2.shortName}
               </div>
               <div className="text-left">
-                <span className="font-bold text-lg">{team2.name}</span>
+                <span className="font-display uppercase tracking-wide text-lg block">{team2.name}</span>
                 {team2.score && (
-                  <p className="font-extrabold text-xl mt-0.5">
-                    {team2.score}/{team2.wickets} 
-                    <span className="text-xs font-normal ml-1">({team2.overs} ov)</span>
+                  <p className="font-headline text-2xl mt-1">
+                    {team2.score}/{team2.wickets}
+                    <span className="text-xs font-medium ml-2 opacity-70">({team2.overs} ov)</span>
                   </p>
                 )}
               </div>
@@ -97,14 +96,14 @@ const LiveMatchCard: React.FC<LiveMatchCardProps> = ({ match }) => {
           </div>
         </div>
         
-        <div className="mt-4 pt-4 border-t border-border">
-          <div className="flex justify-between">
+        <div className="mt-6 pt-4 border-t border-border">
+          <div className="flex justify-between items-center">
             <span className="text-sm text-muted-foreground truncate max-w-[60%]">{venue}</span>
-            <span className={`text-sm font-bold ${isLive ? "text-cricket-green" : "text-muted-foreground"}`}>{status}</span>
+            <span className={`text-sm font-action tracking-wider uppercase ${isLive ? "text-cricket-green" : "text-muted-foreground"}`}>{status}</span>
           </div>
         </div>
       </div>
-    </Card>
+    </div>
   );
 };
 

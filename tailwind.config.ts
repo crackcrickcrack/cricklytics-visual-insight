@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -20,9 +19,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["'Outfit'", "Inter", "sans-serif"],
-        poppins: ["Poppins", "sans-serif"],
-        display: ["'Outfit'", "sans-serif"],
+        sans: ["'Montserrat'", "system-ui", "sans-serif"],
+        display: ["'Bebas Neue'", "'Impact'", "sans-serif"],
+        action: ["'Teko'", "sans-serif"],
+        headline: ["'Anton'", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -31,13 +31,14 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         cricket: {
-          blue: "#0381C4",
-          green: "#00C389",
-          yellow: "#FFC600",
-          orange: "#FF5722",
-          purple: "#8739F9",
-          pink: "#EA4C89",
-          dark: "#0A1124",
+          blue: "#0057FF",
+          green: "#00E267",
+          yellow: "#FFD600",
+          orange: "#FF5C00",
+          purple: "#7000FF",
+          pink: "#FF006B",
+          dark: "#080E21",
+          light: "#F0F7FF",
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",
@@ -75,6 +76,7 @@ export default {
         xl: "1rem",
         "2xl": "1.5rem",
         "3xl": "2rem",
+        "4xl": "3rem",
       },
       keyframes: {
         "accordion-down": {
@@ -120,6 +122,13 @@ export default {
         "pulse-slow": "pulse-slow 3s infinite",
         "float": "float 3s ease-in-out infinite",
         "scale": "scale 0.3s ease-out",
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'noise': "url('/noise.png')",
+        'mesh-1': "linear-gradient(135deg, rgba(255,108,0,1) 0%, rgba(255,0,107,1) 100%)",
+        'mesh-2': "linear-gradient(135deg, rgba(112,0,255,1) 0%, rgba(0,87,255,1) 100%)",
+        'mesh-3': "linear-gradient(135deg, rgba(0,226,103,1) 0%, rgba(0,226,226,1) 100%)",
       },
     },
   },

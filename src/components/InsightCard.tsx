@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 
 interface InsightCardProps {
   title: string;
@@ -14,10 +13,10 @@ const InsightCard: React.FC<InsightCardProps> = ({
 }) => {
   const getCategoryColor = () => {
     switch (category) {
-      case 'batting': return 'text-cricket-yellow bg-cricket-yellow/10';
-      case 'bowling': return 'text-cricket-green bg-cricket-green/10';
-      case 'team': return 'text-cricket-blue bg-cricket-blue/10';
-      case 'prediction': return 'text-cricket-purple bg-cricket-purple/10';
+      case 'batting': return 'text-cricket-yellow bg-cricket-yellow/10 border-cricket-yellow/20';
+      case 'bowling': return 'text-cricket-green bg-cricket-green/10 border-cricket-green/20';
+      case 'team': return 'text-cricket-blue bg-cricket-blue/10 border-cricket-blue/20';
+      case 'prediction': return 'text-cricket-purple bg-cricket-purple/10 border-cricket-purple/20';
       default: return 'text-gray-500 bg-gray-100';
     }
   };
@@ -55,23 +54,23 @@ const InsightCard: React.FC<InsightCardProps> = ({
   };
 
   return (
-    <Card className="hover:shadow-lg transition-all duration-200 card-shine">
-      <CardContent className="p-5">
-        <div className="flex items-start justify-between mb-3">
-          <h3 className="font-bold text-lg">{title}</h3>
+    <div className="hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden rounded-2xl border border-white/10 bg-card">
+      <div className="p-5">
+        <div className="flex items-start justify-between mb-4">
+          <h3 className="font-headline text-xl uppercase tracking-tight">{title}</h3>
           <div className={`flex items-center justify-center p-2 rounded-full ${getCategoryColor()}`}>
             {getCategoryIcon()}
           </div>
         </div>
         
-        <p className="text-base text-muted-foreground mb-4">{content}</p>
+        <p className="text-base opacity-80 mb-5">{content}</p>
         
-        <div className="flex justify-between items-center text-sm text-muted-foreground mt-4 pt-4 border-t border-border">
-          <span className="capitalize px-3 py-1 rounded-full bg-muted">{category}</span>
-          <span>{timestamp}</span>
+        <div className="flex justify-between items-center text-sm text-muted-foreground mt-5 pt-4 border-t border-white/10">
+          <span className="capitalize px-3 py-1 rounded-full bg-muted font-action text-xs uppercase tracking-wider">{category}</span>
+          <span className="text-xs opacity-70">{timestamp}</span>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

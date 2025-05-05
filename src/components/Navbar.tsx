@@ -27,31 +27,27 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDark }) => {
   }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-background/95 backdrop-blur-md shadow-md' : 'bg-transparent'}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-background/90 backdrop-blur-lg shadow-lg' : 'bg-transparent'}`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <svg viewBox="0 0 24 24" className="h-9 w-9 text-cricket-purple" fill="currentColor">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
-                <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm3 7H9v-2h6v2z" />
-              </svg>
-              <span className="ml-2 text-2xl font-bold tracking-tight">Crickly<span className="text-cricket-purple">tics</span></span>
+              <span className="text-3xl font-headline tracking-tight">CRICK<span className="text-cricket-blue">6</span></span>
             </Link>
           </div>
           
           <div className="hidden md:flex items-center space-x-1">
             <Link to="/" className="px-4 py-2 rounded-lg text-base font-medium hover:bg-muted transition-colors">
-              Home
+              HOME
             </Link>
             <Link to="/dashboard" className="px-4 py-2 rounded-lg text-base font-medium hover:bg-muted transition-colors">
-              Stats
+              STATS
             </Link>
             <Link to="/compare" className="px-4 py-2 rounded-lg text-base font-medium hover:bg-muted transition-colors">
-              Compare
+              COMPARE
             </Link>
             <Link to="/matches" className="px-4 py-2 rounded-lg text-base font-medium hover:bg-muted transition-colors">
-              Matches
+              MATCHES
             </Link>
             <Button
               variant="ghost"
@@ -62,8 +58,8 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDark }) => {
             >
               {isDark ? <Sun size={20} /> : <Moon size={20} />}
             </Button>
-            <Button size="sm" className="ml-2 bg-cricket-purple hover:bg-cricket-purple/90 rounded-lg">
-              Sign In
+            <Button size="sm" className="ml-2 cricket-button-primary rounded-lg">
+              SIGN IN
             </Button>
           </div>
           
@@ -82,38 +78,38 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDark }) => {
       
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="md:hidden absolute w-full bg-background/95 backdrop-blur-md shadow-lg animate-fade-in">
+        <div className="md:hidden absolute w-full bg-background/95 backdrop-blur-lg shadow-lg animate-fade-in">
           <div className="px-4 pt-2 pb-4 space-y-3">
             <Link 
               to="/" 
               className="block px-4 py-3 rounded-lg text-base font-medium hover:bg-muted transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
-              Home
+              HOME
             </Link>
             <Link 
               to="/dashboard" 
               className="block px-4 py-3 rounded-lg text-base font-medium hover:bg-muted transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
-              Stats Dashboard
+              STATS
             </Link>
             <Link 
               to="/compare" 
               className="block px-4 py-3 rounded-lg text-base font-medium hover:bg-muted transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
-              Compare Players
+              COMPARE
             </Link>
             <Link 
               to="/matches" 
               className="block px-4 py-3 rounded-lg text-base font-medium hover:bg-muted transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
-              Live Matches
+              MATCHES
             </Link>
             <div className="flex items-center justify-between px-4 py-3">
-              <span className="text-base font-medium">Theme</span>
+              <span className="text-base font-medium">THEME</span>
               <Button
                 variant="ghost"
                 size="sm"
@@ -123,8 +119,8 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDark }) => {
                 {isDark ? <Sun size={18} /> : <Moon size={18} />}
               </Button>
             </div>
-            <Button className="w-full bg-cricket-purple hover:bg-cricket-purple/90 rounded-lg">
-              Sign In
+            <Button className="w-full cricket-button-primary">
+              SIGN IN
             </Button>
           </div>
         </div>
