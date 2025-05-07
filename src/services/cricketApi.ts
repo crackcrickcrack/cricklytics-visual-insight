@@ -1,5 +1,6 @@
 
 import axios from 'axios';
+import { toast } from 'sonner';
 
 // Use Vite's environment variables
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -328,75 +329,93 @@ const mockPlayerData: Record<string, PlayerData> = {
 export const cricketApi = {
   async getPlayerStats(playerId: string): Promise<PlayerData | null> {
     try {
-      // Try to use the API first
+      // Check if API key is available
       if (!API_KEY) {
         console.error('API key is not configured. Using mock data.');
+        toast.error("API key is missing. Using sample data instead.");
         return mockPlayerData[playerId] || null;
       }
 
       console.log('Fetching player stats for ID:', playerId);
       
       try {
-        const response = await axios.get(`${BASE_URL}/players`, {
+        const response = await axios.get(`${BASE_URL}/players_info`, {
           params: {
             apikey: API_KEY,
             id: playerId,
           },
+          timeout: 10000, // 10 second timeout
         });
         
-        console.log('API Response:', response.data);
+        console.log('API Response:', response);
         
-        const data = response.data as { data?: Array<any> };
-        if (!data.data || data.data.length === 0) {
-          console.log('No data returned from API, using mock data');
+        // Check if API returned valid data
+        if (!response.data || response.data.status !== "success") {
+          console.warn('API returned unsuccessful response:', response.data);
+          toast.warning("API returned unsuccessful response. Using sample data instead.");
           return mockPlayerData[playerId] || null;
         }
 
-        const player = data.data[0];
+        const playerData = response.data.data;
         
+        if (!playerData) {
+          console.warn('No player data in API response');
+          toast.warning("No player data returned from API. Using sample data instead.");
+          return mockPlayerData[playerId] || null;
+        }
+
         // Transform API response to match our PlayerData interface
-        return {
-          name: player.name,
-          country: player.country,
-          role: player.role,
+        // This is a simplified mapping - adjust based on actual API response structure
+        const player = {
+          name: playerData.name || '',
+          country: playerData.country || '',
+          role: playerData.role || 'Batsman',
           stats: {
-            matches: player.stats?.matches || 0,
-            runs: player.stats?.runs || 0,
-            average: player.stats?.average || 0,
-            strikeRate: player.stats?.strikeRate || 0,
-            hundreds: player.stats?.hundreds || 0,
-            fifties: player.stats?.fifties || 0,
+            matches: playerData.matchesPlayed || 0,
+            runs: playerData.totalRuns || 0,
+            average: playerData.battingAverage || 0,
+            strikeRate: playerData.strikeRate || 0,
+            hundreds: playerData.hundreds || 0,
+            fifties: playerData.fifties || 0,
           },
-          color: getPlayerColor(player.country),
-          imageUrl: player.imageUrl || `/images/players/${player.name.toLowerCase().replace(' ', '-')}.jpg`,
-          batting: {
+          color: getPlayerColor(playerData.country || ''),
+          imageUrl: playerData.imageUrl || `/images/players/${playerData.name?.toLowerCase().replace(' ', '-') || 'placeholder'}.jpg`,
+          // Add more detailed batting data if available from API
+          batting: mockPlayerData[playerId]?.batting || {
             phases: {
-              powerplay: {
-                runs: player.stats?.powerplayRuns || 0,
-                average: player.stats?.powerplayAverage || 0,
-                strikeRate: player.stats?.powerplayStrikeRate || 0,
-              },
-              middle: {
-                runs: player.stats?.middleRuns || 0,
-                average: player.stats?.middleAverage || 0,
-                strikeRate: player.stats?.middleStrikeRate || 0,
-              },
-              death: {
-                runs: player.stats?.deathRuns || 0,
-                average: player.stats?.deathAverage || 0,
-                strikeRate: player.stats?.deathStrikeRate || 0,
-              },
+              powerplay: { runs: 0, average: 0, strikeRate: 0 },
+              middle: { runs: 0, average: 0, strikeRate: 0 },
+              death: { runs: 0, average: 0, strikeRate: 0 },
             },
-            shots: player.stats?.shots || [],
+            shots: [],
           },
-          recentForm: await cricketApi.getRecentForm(playerId),
+          recentForm: [], // Will be populated by getRecentForm
         };
-      } catch (error) {
-        console.log('API error, falling back to mock data');
+        
+        // Get recent form data and add to player object
+        player.recentForm = await cricketApi.getRecentForm(playerId);
+        
+        toast.success(`Successfully loaded data for ${player.name}`);
+        return player;
+      } catch (error: any) {
+        console.error('API error:', error.message);
+        if (error.response) {
+          console.error('API error response:', error.response.data);
+          toast.error(`API error: ${error.response.data?.status || error.message}`);
+        } else if (error.request) {
+          console.error('No response received:', error.request);
+          toast.error("No response received from the API. Check your internet connection.");
+        } else {
+          console.error('Request error:', error.message);
+          toast.error(`Error setting up API request: ${error.message}`);
+        }
+        
+        toast.info("Falling back to sample player data");
         return mockPlayerData[playerId] || null;
       }
     } catch (error: any) {
       console.error('Error in getPlayerStats:', error.message);
+      toast.error(`Unexpected error: ${error.message}`);
       // Fallback to mock data on any error
       return mockPlayerData[playerId] || null;
     }
@@ -405,36 +424,42 @@ export const cricketApi = {
   async getRecentForm(playerId: string) {
     try {
       if (!API_KEY) {
-        console.error('API key is not configured. Using mock data.');
+        console.error('API key is not configured. Using mock data for recent form.');
         return mockPlayerData[playerId]?.recentForm || [];
       }
 
       console.log('Fetching recent form for player ID:', playerId);
       try {
-        const response = await axios.get(`${BASE_URL}/matches`, {
+        const response = await axios.get(`${BASE_URL}/players_matches`, {
           params: {
             apikey: API_KEY,
-            playerId: playerId,
-            limit: 5,
+            id: playerId,
           },
+          timeout: 8000, // 8 second timeout
         });
         
-        console.log('Recent Form Response:', response.data);
+        console.log('Recent Form API Response:', response.data);
         
-        const data = response.data as { data?: Array<{ teams: string[], runs?: number, balls?: number, venue?: string }> };
-        if (!data.data || data.data.length === 0) {
-          console.log('No recent form data from API, using mock data');
+        if (!response.data || response.data.status !== "success" || !response.data.data) {
+          console.warn('Invalid recent form response:', response.data);
           return mockPlayerData[playerId]?.recentForm || [];
         }
         
-        return data.data.map(match => ({
-          match: `${match.teams[0]} vs ${match.teams[1]}`,
+        const matches = response.data.data;
+        if (!Array.isArray(matches) || matches.length === 0) {
+          console.log('No recent matches found in API response');
+          return mockPlayerData[playerId]?.recentForm || [];
+        }
+        
+        // Take up to 5 recent matches
+        return matches.slice(0, 5).map((match: any) => ({
+          match: match.matchTitle || match.teams?.join(' vs ') || 'Unknown Match',
           runs: match.runs || 0,
           balls: match.balls || 0,
-          venue: match.venue || 'Unknown',
+          venue: match.venue || 'Unknown Venue',
         }));
-      } catch (error) {
-        console.log('API error for recent form, falling back to mock data');
+      } catch (error: any) {
+        console.error('Recent form API error:', error.message);
         return mockPlayerData[playerId]?.recentForm || [];
       }
     } catch (error: any) {

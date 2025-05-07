@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -12,7 +11,7 @@ import { AlertCircle } from 'lucide-react';
 import PlayerCard from '@/components/PlayerCard';
 import { cricketApi } from '@/services/cricketApi';
 import RadarPlayerChart from '@/components/RadarPlayerChart';
-import { toast } from '@/components/ui/sonner';
+import { toast } from 'sonner';
 import {
   BarChart,
   Bar,
@@ -86,12 +85,17 @@ const Compare: React.FC = () => {
   const [player1Data, setPlayer1Data] = useState<PlayerData | null>(null);
   const [player2Data, setPlayer2Data] = useState<PlayerData | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [isUsingMockData, setIsUsingMockData] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchPlayerData = async () => {
       setLoading(true);
       setError(null);
+      setIsUsingMockData(false);
+      
       try {
+        toast.info("Fetching player data...");
+        
         const [data1, data2] = await Promise.all([
           cricketApi.getPlayerStats(player1),
           cricketApi.getPlayerStats(player2),
@@ -105,13 +109,18 @@ const Compare: React.FC = () => {
         setPlayer1Data(data1);
         setPlayer2Data(data2);
         
-        // Show toast when using mock data
-        toast.info("Using pre-loaded player data for comparison", {
-          description: "Live API data is unavailable at the moment."
-        });
+        // Check if we're using mock data by comparing with known mock data structure
+        const isMockData = data1.stats.runs === mockPlayerStats(player1).stats.runs;
+        setIsUsingMockData(isMockData);
         
-      } catch (err) {
-        setError('An error occurred while fetching player data. Please try again later.');
+        if (isMockData) {
+          toast.info("Using pre-loaded player data for comparison", {
+            description: "Live API data is unavailable at the moment."
+          });
+        }
+        
+      } catch (err: any) {
+        setError(`An error occurred while fetching player data: ${err.message}`);
         console.error('Error fetching player data:', err);
       } finally {
         setLoading(false);
@@ -120,6 +129,22 @@ const Compare: React.FC = () => {
 
     fetchPlayerData();
   }, [player1, player2]);
+
+  // Helper function to get mock stats (for checking if we're using mock data)
+  const mockPlayerStats = (playerId: string) => {
+    const mockStats = {
+      '1': { stats: { runs: 3932 } },
+      '2': { stats: { runs: 3528 } },
+      '3': { stats: { runs: 3428 } },
+      '4': { stats: { runs: 3120 } },
+      '5': { stats: { runs: 3690 } },
+      '6': { stats: { runs: 3580 } },
+      '7': { stats: { runs: 3180 } },
+      '8': { stats: { runs: 3080 } },
+    } as Record<string, { stats: { runs: number } }>;
+    
+    return mockStats[playerId] || { stats: { runs: 0 } };
+  };
 
   const getStatComparisonData = () => {
     if (!player1Data || !player2Data) {
@@ -192,6 +217,22 @@ const Compare: React.FC = () => {
               <AlertCircle className="h-4 w-4" />
               <AlertDescription>{error}</AlertDescription>
             </Alert>
+          )}
+          
+          {isUsingMockData && (
+            <Alert className="mb-6 bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800">
+              <AlertCircle className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+              <AlertDescription className="text-amber-700 dark:text-amber-300">
+                Using sample player data. Live API data is currently unavailable.
+              </AlertDescription>
+            </Alert>
+          )}
+
+          {loading && (
+            <div className="flex items-center justify-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+              <span className="ml-3 text-lg">Loading player data...</span>
+            </div>
           )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
