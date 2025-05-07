@@ -1,4 +1,5 @@
 
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -37,7 +38,7 @@ export default {
           darkblue: "#142440",
           green: "#27AE60",
           yellow: "#F7CB45",
-          orange: "#F47B37",
+          orange: "#FF5722",
           purple: "#8E44AD",
           pink: "#E91E63",
           dark: "#0A1426",
@@ -117,6 +118,14 @@ export default {
           "0%": { transform: "scale(0.95)" },
           "100%": { transform: "scale(1)" },
         },
+        "shimmer": {
+          "0%": { backgroundPosition: "-1000px 0" },
+          "100%": { backgroundPosition: "1000px 0" },
+        },
+        "card-hover": {
+          "0%": { transform: "translateY(0)" },
+          "100%": { transform: "translateY(-8px)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -126,6 +135,8 @@ export default {
         "pulse-slow": "pulse-slow 3s infinite",
         "float": "float 3s ease-in-out infinite",
         "scale": "scale 0.3s ease-out",
+        "shimmer": "shimmer 2s infinite linear",
+        "card-hover": "card-hover 0.3s ease-out forwards",
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -133,8 +144,14 @@ export default {
         'mesh-1': "linear-gradient(135deg, rgba(255,108,0,1) 0%, rgba(255,0,107,1) 100%)",
         'mesh-2': "linear-gradient(135deg, rgba(112,0,255,1) 0%, rgba(0,87,255,1) 100%)",
         'mesh-3': "linear-gradient(135deg, rgba(0,226,103,1) 0%, rgba(0,226,226,1) 100%)",
+        'cricket-pattern': "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+      },
+      boxShadow: {
+        'card': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+        'card-hover': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
+

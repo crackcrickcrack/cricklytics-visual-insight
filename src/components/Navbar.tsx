@@ -32,7 +32,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDark }) => {
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <span className="text-3xl font-display tracking-tight">CRICK<span className="text-cricket-blue">6</span></span>
+              <span className="text-3xl font-display tracking-tight">CRICK<span className="text-cricket-orange">8</span></span>
             </Link>
           </div>
           
