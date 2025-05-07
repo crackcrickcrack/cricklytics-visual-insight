@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -10,6 +11,8 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
 import PlayerCard from '@/components/PlayerCard';
 import { cricketApi } from '@/services/cricketApi';
+import RadarPlayerChart from '@/components/RadarPlayerChart';
+import { toast } from '@/components/ui/sonner';
 import {
   BarChart,
   Bar,
@@ -101,6 +104,12 @@ const Compare: React.FC = () => {
 
         setPlayer1Data(data1);
         setPlayer2Data(data2);
+        
+        // Show toast when using mock data
+        toast.info("Using pre-loaded player data for comparison", {
+          description: "Live API data is unavailable at the moment."
+        });
+        
       } catch (err) {
         setError('An error occurred while fetching player data. Please try again later.');
         console.error('Error fetching player data:', err);
@@ -155,6 +164,20 @@ const Compare: React.FC = () => {
       imageUrl: data.imageUrl,
     };
   };
+
+  // Generate skill data for radar chart
+  const getSkillsData = (player: PlayerData) => ({
+    name: player.name,
+    color: player.color,
+    skills: [
+      { name: "Technique", value: Math.floor(70 + Math.random() * 20) },
+      { name: "Power", value: Math.floor(70 + Math.random() * 20) },
+      { name: "Consistency", value: Math.floor(player.stats.average) },
+      { name: "Aggression", value: Math.floor(player.stats.strikeRate / 2) },
+      { name: "Form", value: Math.floor(65 + Math.random() * 25) },
+      { name: "Experience", value: Math.floor(player.stats.matches / 1.5) > 100 ? 100 : Math.floor(player.stats.matches / 1.5) }
+    ]
+  });
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -266,6 +289,22 @@ const Compare: React.FC = () => {
                   </ResponsiveContainer>
                 </CardContent>
               </Card>
+              
+              {/* Skills Radar Chart Comparison */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg">Skills Analysis</CardTitle>
+                </CardHeader>
+                <CardContent className="h-[450px]">
+                  {player1Data && player2Data && (
+                    <RadarPlayerChart 
+                      player={getSkillsData(player1Data)}
+                      secondPlayer={getSkillsData(player2Data)}
+                      title="Player Attributes Comparison"
+                    />
+                  )}
+                </CardContent>
+              </Card>
 
               {/* Recent Form Comparison */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -283,6 +322,7 @@ const Compare: React.FC = () => {
                           <div>
                             <p className="font-medium">{match.match}</p>
                             <p className="text-sm text-muted-foreground">{match.venue}</p>
+                            <p className="text-xs font-semibold">{match.runs} runs ({match.balls} balls)</p>
                           </div>
                         </div>
                       ))}
@@ -304,6 +344,7 @@ const Compare: React.FC = () => {
                           <div>
                             <p className="font-medium">{match.match}</p>
                             <p className="text-sm text-muted-foreground">{match.venue}</p>
+                            <p className="text-xs font-semibold">{match.runs} runs ({match.balls} balls)</p>
                           </div>
                         </div>
                       ))}
@@ -326,7 +367,7 @@ const Compare: React.FC = () => {
             </div>
           )}
 
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full mt-8">
             <TabsList className="grid w-full grid-cols-4 mb-8">
               <TabsTrigger value="overall">Overall Stats</TabsTrigger>
               <TabsTrigger value="phases">Phase Analysis</TabsTrigger>
