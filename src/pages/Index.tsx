@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -39,7 +40,6 @@ const featuredArticles = [
     id: '1',
     title: 'The Evolution of T20 Cricket: A Data-Driven Analysis',
     excerpt: 'How data analytics is reshaping the shortest format of the game',
-    image: '/images/t20-analysis.jpg',
     category: 'Analysis',
     readTime: '5 min read'
   },
@@ -47,7 +47,6 @@ const featuredArticles = [
     id: '2',
     title: 'Breaking Down Virat Kohli\'s Comeback',
     excerpt: 'A statistical deep dive into the Indian captain\'s recent form',
-    image: '/images/kohli-analysis.jpg',
     category: 'Player Analysis',
     readTime: '4 min read'
   }
@@ -65,10 +64,6 @@ const performanceTrends = [
 
 const Index = () => {
   const { isDark, toggleTheme } = useTheme();
-
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    e.currentTarget.src = '/images/placeholder.jpg';
-  };
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -116,24 +111,27 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Featured Articles */}
+            {/* Featured Articles - Fixed section */}
             <div>
               <h2 className="text-2xl font-bold mb-6">Featured Analysis</h2>
               <div className="space-y-4">
                 {featuredArticles.map((article) => (
-                  <Card key={article.id} className="hover:shadow-lg transition-shadow">
+                  <Card key={article.id} className="overflow-hidden hover:shadow-lg transition-shadow border-l-4 border-l-cricket-orange">
                     <CardContent className="p-6">
-                      <div className="aspect-video relative mb-4 rounded-lg overflow-hidden bg-muted">
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <span className="text-muted-foreground">Image Placeholder</span>
-                        </div>
-                      </div>
                       <div className="flex items-center space-x-2 mb-2">
-                        <span className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-full">{article.category}</span>
+                        <span className="px-2 py-1 bg-cricket-orange/10 text-cricket-orange text-xs rounded-full font-medium">{article.category}</span>
                         <span className="text-xs text-muted-foreground">{article.readTime}</span>
                       </div>
-                      <h3 className="font-semibold mb-2">{article.title}</h3>
+                      <h3 className="font-semibold text-lg mb-2 text-cricket-navy dark:text-white">{article.title}</h3>
                       <p className="text-sm text-muted-foreground">{article.excerpt}</p>
+                      <div className="mt-4">
+                        <Link to="#" className="inline-flex items-center text-sm font-medium text-cricket-orange hover:text-cricket-orange/80">
+                          Read Analysis
+                          <svg className="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          </svg>
+                        </Link>
+                      </div>
                     </CardContent>
                   </Card>
                 ))}
