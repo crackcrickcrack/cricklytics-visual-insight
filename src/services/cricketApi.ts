@@ -1,5 +1,5 @@
 
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { toast } from 'sonner';
 
 // Use Vite's environment variables
@@ -48,6 +48,23 @@ interface PlayerData {
     balls: number;
     venue: string;
   }[];
+}
+
+// Define API response type interfaces
+interface ApiResponse {
+  status: string;
+  data: any;
+  info?: {
+    hitsToday: number;
+    hitsUsed: number;
+    hitsLimit: number;
+    credits: number;
+    server: number;
+    offsetRows: number;
+    totalRows: number;
+    queryTime: number;
+    s: number;
+  };
 }
 
 // Mock player data to use when API isn't accessible
@@ -339,7 +356,7 @@ export const cricketApi = {
       console.log('Fetching player stats for ID:', playerId);
       
       try {
-        const response = await axios.get(`${BASE_URL}/players_info`, {
+        const response: AxiosResponse<ApiResponse> = await axios.get(`${BASE_URL}/players_info`, {
           params: {
             apikey: API_KEY,
             id: playerId,
@@ -430,7 +447,7 @@ export const cricketApi = {
 
       console.log('Fetching recent form for player ID:', playerId);
       try {
-        const response = await axios.get(`${BASE_URL}/players_matches`, {
+        const response: AxiosResponse<ApiResponse> = await axios.get(`${BASE_URL}/players_matches`, {
           params: {
             apikey: API_KEY,
             id: playerId,
@@ -487,3 +504,4 @@ function getPlayerColor(country: string): string {
 
   return colors[country] || '#1E40AF'; // Default to blue if country not found
 }
+
